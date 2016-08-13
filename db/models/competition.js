@@ -7,33 +7,44 @@ var CompetitionSchema = new Schema({
 	api_detail: {
 		id: {
 			type: Number,
-			index: true
+			index: true,
+			required: true
 		}
 	},
 
 	name: {
-		type: String
+		type: String,
+		required: true
 	},
 
 	leagueCode: {
-		type: String
+		type: String,
+		required: true
 	},
 
 	year: {
-		type: String
+		type: String,
+		required: true
 	},
 
 	currentMatchday: {
-		type: Number
+		type: Number,
+		default: 1
 	},
 
 	numberOfMatchdays: {
-		type: Number
+		type: Number,
+		required: true
 	},
 
-	standings: [{
+	lastStanding: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Standings"
+	},
+
+	fixtures: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Fixtures"
 	}],
 
 	teams: [{
