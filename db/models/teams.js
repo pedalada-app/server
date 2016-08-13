@@ -7,16 +7,19 @@ var TeamSchema = new Schema({
 	api_detail: {
 		id: {
 			type: Number,
-			index: true
+			index: true,
+            required: true
 		}
 	},
 
 	name: {
-		type: String
+		type: String,
+        required: true
 	},
 
 	shortName: {
-		type: String
+		type: String,
+        required: true
 	},
 
 	competitions: [{

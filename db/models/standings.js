@@ -6,71 +6,109 @@ var StandingsSchema = new Schema({
 
 	compId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Competition"
+		ref: "Competition",
+		index: true,
+		required: true
 	},
 
 	matchday: {
-		type: Number
+		type: Number,
+		index: true,
+		required: true
 	},
 
 	standings: [{
 		team: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Standings"
+			ref: "Standings",
+			required: true
 		},
+
 		playedGames: {
-			type: Number
+			type: Number,
+			required: true
 		},
+
 		points: {
-			type: Number
+			type: Number,
+			required: true
 		},
+
 		goals: {
-			type: Number
+			type: Number,
+			required: true
 		},
+
 		goalsAgainst: {
-			type: Number
+			type: Number,
+			required: true
 		},
+
 		wins: {
-			type: Number
+			type: Number,
+			required: true
 		},
+
 		draw: {
-			type: Number
+			type: Number,
+			required: true
 		},
+
 		losses: {
-			type: Number
+			type: Number,
+			required: true
 		},
+
 		homeRecord: {
 			goals: {
-				type: Number
+				type: Number,
+				required: true
 			},
+
 			goalsAgainst: {
-				type: Number
+				type: Number,
+				required: true
 			},
+
 			wins: {
-				type: Number
+				type: Number,
+				required: true
 			},
+
 			draw: {
-				type: Number
+				type: Number,
+				required: true
 			},
+
 			losses: {
-				type: Number
+				type: Number,
+				required: true
 			}
 		},
 		awayRecord: {
 			goals: {
-				type: Number
+				type: Number,
+				required: true
 			},
+
 			goalsAgainst: {
-				type: Number
+				type: Number,
+				required: true
 			},
+
 			wins: {
-				type: Number
+				type: Number,
+				required: true
 			},
+
 			draw: {
-				type: Number
+				type: Number,
+				required: true
 			},
+
 			losses: {
-				type: Number
+				type: Number,
+				required: true
 			}
 		}
 	}]
