@@ -1,3 +1,92 @@
-/**
- * Created by yuval1488 on 8/13/16.
- */
+var mongoose = require('mongoose');
+
+var Schema = mongoose.Schema;
+
+var FixtureSchema = new Schema({
+
+
+    api_detail: {
+        id: {
+            type: Number,
+            index: true,
+            required: true
+        }
+    },
+
+    competitionId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Competition",
+        index: true,
+        required: true
+    },
+
+    date: {
+        type: Date,
+        index: true,
+        required: true
+    },
+
+    status: {
+        type: String,
+        enum: ['SCHEDULED', 'TIMED', 'IN_PLAY', 'FINISHED', 'CANCELED', 'POSTPONED']
+    },
+
+    matchday: {
+        type: Number,
+        index: true,
+        required: true
+    },
+
+    homeTeam: {
+        name: {
+            type: String,
+            required: true
+        },
+        id: {
+            type: Number,
+            index: true,
+            required: true
+        }
+    },
+
+    awayTeam: {
+        name: {
+            type: String,
+            required: true
+        },
+        id: {
+            type: Number,
+            index: true,
+            required: true
+        }
+    },
+
+    resule: {
+        goalsHomeTeam: {
+            type: Number,
+            default: -1
+        },
+        goalsAwayTeam: {
+            type: Number,
+            default: -1
+        }
+    },
+
+    odds: {
+        home: {
+            type: Number,
+            default: 1
+        },
+        away: {
+            type: Number,
+            default: 1
+        },
+        draw: {
+            type: Number,
+            default: 1
+        }
+    }
+});
+
+
+module.exports = mongoose.model("Fixture", FixtureSchema);
