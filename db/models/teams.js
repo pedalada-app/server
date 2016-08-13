@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 
 var TeamSchema = new Schema({
 
-
 	api_detail: {
 		id: {
 			type: Number,
