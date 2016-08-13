@@ -22,6 +22,10 @@ var TeamSchema = new Schema({
         required: true
 	},
 
+	suqadMarketValue: {
+		type: String
+	},
+
 	competitions: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Competition"
@@ -29,7 +33,7 @@ var TeamSchema = new Schema({
 
 	fixtures: [{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Fixtures"
+		ref: "Fixture"
 	}],
 
 	crestUrl: {
@@ -37,6 +41,5 @@ var TeamSchema = new Schema({
 	}
 
 });
-
 
 module.exports = mongoose.model("Team", TeamSchema);

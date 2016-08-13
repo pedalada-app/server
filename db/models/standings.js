@@ -17,10 +17,15 @@ var StandingsSchema = new Schema({
 		required: true
 	},
 
-	standings: [{
-		team: {
+	standing: [{
+		teamId: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Standings",
+			required: true
+		},
+
+		name: {
+			type: String,
 			required: true
 		},
 
@@ -42,74 +47,6 @@ var StandingsSchema = new Schema({
 		goalsAgainst: {
 			type: Number,
 			required: true
-		},
-
-		wins: {
-			type: Number,
-			required: true
-		},
-
-		draw: {
-			type: Number,
-			required: true
-		},
-
-		losses: {
-			type: Number,
-			required: true
-		},
-
-		homeRecord: {
-			goals: {
-				type: Number,
-				required: true
-			},
-
-			goalsAgainst: {
-				type: Number,
-				required: true
-			},
-
-			wins: {
-				type: Number,
-				required: true
-			},
-
-			draw: {
-				type: Number,
-				required: true
-			},
-
-			losses: {
-				type: Number,
-				required: true
-			}
-		},
-		awayRecord: {
-			goals: {
-				type: Number,
-				required: true
-			},
-
-			goalsAgainst: {
-				type: Number,
-				required: true
-			},
-
-			wins: {
-				type: Number,
-				required: true
-			},
-
-			draw: {
-				type: Number,
-				required: true
-			},
-
-			losses: {
-				type: Number,
-				required: true
-			}
 		}
 	}]
 

@@ -43,7 +43,8 @@ var FixtureSchema = new Schema({
             required: true
         },
         id: {
-            type: Number,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Team",
             index: true,
             required: true
         }
@@ -55,8 +56,8 @@ var FixtureSchema = new Schema({
             required: true
         },
         id: {
-            type: Number,
-            index: true,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Team",
             required: true
         }
     },
@@ -73,11 +74,11 @@ var FixtureSchema = new Schema({
     },
 
     odds: {
-        home: {
+        homeWin: {
             type: Number,
             default: 1
         },
-        away: {
+        awayWin: {
             type: Number,
             default: 1
         },

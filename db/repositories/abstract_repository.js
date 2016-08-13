@@ -1,3 +1,5 @@
+var Rx = require('rx');
+
 class AbstractRepository {
 
     constructor(model, converterFactory) {
@@ -6,9 +8,14 @@ class AbstractRepository {
     }
 
     insert(obj) {
-        let obj = this.converterFactory.from(obj);
+        let source = this.converterFactory.from(obj);
 
-        return this.model.create(obj);
+        let that = this;
+
+        return source.flatMap(function (obj) {
+            return Rx.Observable.fromPromise(that.model.create(obj));
+        })
+
     }
 
     update() {
@@ -21,6 +28,15 @@ class AbstractRepository {
 
     find() {
 
+    }
+
+    idMapping(id) {
+        return this.model.findOne()
+            .where("api_detail.id").equals(id)
+            .lean()
+            .then(function (obj) {
+            return obj._id;
+        });
     }
 
 }
