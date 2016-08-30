@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var standingsModel = require('../models/standings');
-var competitionRepository = require('./competiton_repository');
+var competitionRepository = require('./competition_repository');
 var teamRepository = require('./team_repository');
+var repositoryUtils = require('./repository_utils');
 var Rx = require('rx');
 
 class StandingsConverter {
@@ -53,6 +54,18 @@ class StandingsRepository {
 
     insert(obj) {
         return this.absRep.insert(obj);
+    }
+
+    insertMany(docs) {
+        this.absRep.insertMany(docs);
+    }
+
+    getByApiId(apiId) {
+        return repositoryUtils.getByApiId(this, apiId);
+    }
+
+    getById(id) {
+        return repositoryUtils.getById(this, id);
     }
 
     idMapping(id) {

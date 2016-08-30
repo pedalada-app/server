@@ -22,7 +22,7 @@ var TeamSchema = new Schema({
         required: true
 	},
 
-	suqadMarketValue: {
+	squadMarketValue: {
 		type: String
 	},
 

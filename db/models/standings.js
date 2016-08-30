@@ -20,7 +20,7 @@ var StandingsSchema = new Schema({
 	standing: [{
 		teamId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Standings",
+			ref: "Team",
 			required: true
 		},
 

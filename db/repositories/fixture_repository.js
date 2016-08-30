@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var fixtureModel = require('../models/fixtures');
-var competitionRepository = require('./competiton_repository');
+var competitionRepository = require('./competition_repository');
 var teamRepository = require('./team_repository');
+var repositoryUtils = require('./repository_utils');
+
 var Rx = require('rx');
 
 class FixtureConverter {
@@ -41,12 +43,42 @@ class FixtureConverter {
 }
 
 class FixtureRepository {
+
+
     constructor() {
         this.absRep = new AbstractRepository(fixtureModel, new FixtureConverter());
     }
 
     insert(obj) {
         return this.absRep.insert(obj);
+    }
+
+    insertMany(docs) {
+        this.absRep.insertMany(docs);
+    }
+
+    updateResult(fixtureId, result) {
+        return this.absRep.update({_id : fixtureId}, {result : result});
+    }
+
+    updateStatus(fixtureId, status) {
+        return this.absRep.update({_id : fixtureId}, {status : status});
+    }
+
+    updateDate(fixtureId, date) {
+        return this.absRep.update({_id : fixtureId}, {date : date});
+    }
+
+    updateOdds(fixtureId, odds) {
+        return this.absRep.update({_id : fixtureId}, {odds : odds});
+    }
+
+    getByApiId(apiId) {
+        return repositoryUtils.getByApiId(this, apiId);
+    }
+
+    getById(id) {
+        return repositoryUtils.getById(this, id);
     }
 
     idMapping(id) {

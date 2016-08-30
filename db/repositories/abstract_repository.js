@@ -18,16 +18,33 @@ class AbstractRepository {
 
     }
 
-    update() {
-
+    insertMany(docs) {
+        let convertedDocs = [];
+        for (let doc of docs) {
+            convertedDocs.push(this.converterFactory.from(doc));
+        }
+        return this.model.insertMany(convertedDocs);
     }
 
-    deldete() {
-
+    update(conditions, doc) {
+        var options = {
+            overwrite : true
+        };
+        return this.model.update(conditions, doc, options, function(err) {
+            console.log("can't update");
+        });
     }
 
-    find() {
+    delete(id) {
+        return this.model.remove({_id : id});
+    }
 
+    findOne(query, projection) {
+        return this.model.findOne(query, projection);
+    }
+
+    findAll(query, projection) {
+        return this.model.find(query, projection);
     }
 
     idMapping(id) {
