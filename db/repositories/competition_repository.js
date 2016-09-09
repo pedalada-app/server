@@ -2,11 +2,14 @@ var competitionModel = require('../models/competition');
 var standingRepository = require('./standings_repository');
 var fixtureRepository = require('./fixture_repository');
 var repositoryUtils = require('./repository_utils');
+var AbstractRepository = require('./abstract_repository');
+
+var Rx = require('rx');
 
 class CompetitionConverter {
 
     from(obj) {
-        return {
+        return Rx.Observable.just({
             api_detail: {
                 id: obj.id
             },
@@ -15,7 +18,7 @@ class CompetitionConverter {
             year: obj.year,
             currentMatchday: obj.currentMatchday,
             numberOfMatchdays: obj.numberOfMatchdays
-        }
+        });
     }
 
 }
@@ -23,7 +26,7 @@ class CompetitionConverter {
 class CompetitionRepository {
 
     constructor() {
-        this.absRep = new AbstractRepository(competitionModel, new CompetitionRepository())
+        this.absRep = new AbstractRepository(competitionModel, new CompetitionConverter())
     }
 
     insert(obj) {

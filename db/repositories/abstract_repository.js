@@ -8,6 +8,7 @@ class AbstractRepository {
     }
 
     insert(obj) {
+
         let source = this.converterFactory.from(obj);
 
         let that = this;
@@ -57,3 +58,5 @@ class AbstractRepository {
     }
 
 }
+
+module.exports = AbstractRepository;

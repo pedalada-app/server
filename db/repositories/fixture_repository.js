@@ -4,6 +4,8 @@ var competitionRepository = require('./competition_repository');
 var teamRepository = require('./team_repository');
 var repositoryUtils = require('./repository_utils');
 
+var AbstractRepository = require('./abstract_repository');
+
 var Rx = require('rx');
 
 class FixtureConverter {

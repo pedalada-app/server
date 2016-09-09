@@ -3,9 +3,14 @@ var compRepo = require('../repositories/competition_repository');
 var mongoose = require('mongoose');
 var competiton = require('../models/competition');
 
+var Rx = require('Rx');
+
 var expect = chai.expect;
 
 
+var assertFalse = function () {
+    expect(false).to.be.true;
+};
 describe('Compatition Repository test', function() {
 
     beforeEach(function(done) {
@@ -17,26 +22,38 @@ describe('Compatition Repository test', function() {
 
     it('insert', function(done) {
         var comp = {
-            "id": 394,
-            "caption": "1. Bundesliga 2015/16",
-            "league": "BL1",
-            "year": "2015",
-            "numberOfTeams": 18,
-            "numberOfGames": 306,
-            "lastUpdated": "2015-10-25T19:06:29Z"
+            id: 426,
+            caption: "Premier League 2016/17",
+            league: "PL",
+            year: "2016",
+            currentMatchday: 4,
+            numberOfMatchdays: 38,
+            numberOfTeams: 20,
+            numberOfGames: 380,
+            lastUpdated: "2016-09-09T00:00:22Z"
         };
 
         compRepo.insert(comp)
-            .then(function(id) {
-                return competiton.findOne({id : id});
+            .flatMap(function(obj) {
+
+
+                return Rx.Observable.fromPromise(competiton.findOne({_id : obj._id}));
 
             })
-            .then(function(returnComp) {
+            .subscribe(function(returnComp) {
+
+                console.log(returnComp);
+
                 if(returnComp) {
                     done()
                 } else {
-                    expect(false).to.be.true;
+                    assertFalse();
                 }
+            }, function (error) {
+
+                console.error(error);
+
+                assertFalse();
             });
 
     });

@@ -3,18 +3,23 @@ var fixtureRepository = require('./fixture_repository');
 var competitonRepository = require('./competition_repository');
 var repositoryUtils = require('./repository_utils');
 
+var AbstractRepository = require('./abstract_repository');
+
+var Rx = require('Rx');
+
 class TeamConverter {
 
     from(obj) {
-        return {
-            api_detail: {
-                id: obj.id
-            },
-            name: obj.name,
-            shortName: obj.shortName,
-            squadMarketValue: obj.squadMarketValue,
-            crestUrl: obj.crestUrl
-        }
+        return Rx.just({
+                api_detail: {
+                    id: obj.id
+                },
+                name: obj.name,
+                shortName: obj.shortName,
+                squadMarketValue: obj.squadMarketValue,
+                crestUrl: obj.crestUrl
+            }
+        );
     }
 
 }
@@ -37,12 +42,12 @@ class TeamRepository {
 
         let that = this;
         return fixtureRepository.insertMany(fixtures)
-            .flatMap(function(obj) {
+            .flatMap(function (obj) {
                 let ids = [];
                 for (let ins of obj) {
                     ids.push(ins._id);
                 }
-                return that.absRep.update({_id : teamId}, {$add : {fixtures : ids}})
+                return that.absRep.update({_id: teamId}, {$add: {fixtures: ids}})
             });
     }
 
@@ -50,12 +55,12 @@ class TeamRepository {
 
         let that = this;
         return competitonRepository.insertMany(competitions)
-            .flatMap(function(obj) {
+            .flatMap(function (obj) {
                 let ids = [];
                 for (let ins of obj) {
                     ids.push(ins._id);
                 }
-                return that.absRep.update({_id : teamId}, {$add : {competitions : ids}})
+                return that.absRep.update({_id: teamId}, {$add: {competitions: ids}})
             });
     }
 
