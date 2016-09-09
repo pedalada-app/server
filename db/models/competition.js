@@ -8,7 +8,8 @@ var CompetitionSchema = new Schema({
 		id: {
 			type: Number,
 			index: true,
-			required: true
+			required: true,
+			unique: true
 		}
 	},
 

@@ -1,6 +1,4 @@
 var competitionModel = require('../models/competition');
-var standingRepository = require('./standings_repository');
-var fixtureRepository = require('./fixture_repository');
 var repositoryUtils = require('./repository_utils');
 var AbstractRepository = require('./abstract_repository');
 
@@ -34,33 +32,23 @@ class CompetitionRepository {
     }
 
     insertMany(docs) {
-        this.absRep.insertMany(docs);
+        return this.absRep.insertMany(docs);
     }
 
-    updateStanding(compId, standing) {
-        var that = this;
-        return standingRepository.insert(standing)
-            .flatMap(function (obj) {
-                return that.absRep.update({_id : compId}, {lastStanding : obj._id});
-            });
-
+    updateStanding(compId, standingId) {
+        return this.absRep.update({_id : compId}, {lastStanding : standingId});
     }
 
     updateMatchDay(compId, matchDay) {
         return this.absRep.update({_id : compId}, {currentMatchday : matchDay});
     }
 
-    addFixtures(compId, fixtures) {
+    addFixtures(compId, fixturesIds) {
+        return this.absRep.update({_id : compId}, {$push : {fixtures : {$each : fixturesIds}}});
+    }
 
-        let that = this;
-        return fixtureRepository.insertMany(fixtures)
-            .flatMap(function(obj) {
-                let ids = [];
-                for (let ins of obj) {
-                    ids.push(ins._id);
-                }
-                return that.absRep.update({_id : compId}, {$add : {fixtures : ids}})
-            });
+    addTeams(compId, teamsIds) {
+        return this.absRep.update({_id : compId}, {$push : {teams : {$each : teamsIds}}});
     }
 
     getByApiId(apiId) {
@@ -77,6 +65,4 @@ class CompetitionRepository {
 
 }
 
-var obj = new CompetitionRepository();
-
-module.exports = obj;
+module.exports = CompetitionRepository;

@@ -20,20 +20,24 @@ class AbstractRepository {
     }
 
     insertMany(docs) {
-        let convertedDocs = [];
+        let convertedDocsObs = [];
         for (let doc of docs) {
-            convertedDocs.push(this.converterFactory.from(doc));
+            convertedDocsObs.push(this.converterFactory.from(doc));
         }
-        return this.model.insertMany(convertedDocs);
+
+        let that = this;
+
+        return Rx.Observable.zip(convertedDocsObs)
+            .flatMap(function (convertedDocs) {
+                return Rx.Observable.fromPromise(that.model.insertMany(convertedDocs));
+            })
     }
 
     update(conditions, doc) {
         var options = {
             overwrite : true
         };
-        return this.model.update(conditions, doc, options, function(err) {
-            console.log("can't update");
-        });
+        return this.model.update(conditions, doc, options);
     }
 
     delete(id) {
@@ -53,7 +57,7 @@ class AbstractRepository {
             .where("api_detail.id").equals(id)
             .lean()
             .then(function (obj) {
-            return obj._id;
+                return Promise.resolve(obj._id);
         });
     }
 

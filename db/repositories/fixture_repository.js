@@ -1,7 +1,6 @@
-var mongoose = require('mongoose');
 var fixtureModel = require('../models/fixtures');
-var competitionRepository = require('./competition_repository');
-var teamRepository = require('./team_repository');
+var CompetitionRepository = require('./competition_repository');
+var TeamRepository = require('./team_repository');
 var repositoryUtils = require('./repository_utils');
 
 var AbstractRepository = require('./abstract_repository');
@@ -10,17 +9,22 @@ var Rx = require('rx');
 
 class FixtureConverter {
 
+    constructor() {
+        this.CompRepo = new CompetitionRepository();
+        this.teamRepo = new TeamRepository()
+    }
+
     from(obj) {
         return Rx.Observable.zip(
-            Rx.Observable.fromPromise(competitionRepository.idMapping(obj.competitionId)),
-            Rx.Observable.fromPromise(teamRepository.idMapping(obj.homeTeamId)),
-            Rx.Observable.fromPromise(teamRepository.idMapping(obj.awayTeamId)),
+            Rx.Observable.fromPromise(this.CompRepo.idMapping(obj.competitionId)),
+            Rx.Observable.fromPromise(this.teamRepo.idMapping(obj.homeTeamId)),
+            Rx.Observable.fromPromise(this.teamRepo.idMapping(obj.awayTeamId)),
             function (compid, homeTeamId, awayTeamId) {
                 return {
                     api_detail: {
-                        id: compid
+                        id: obj.id
                     },
-                    competitionId: id,
+                    competitionId: compid,
                     date: new Date(obj.date),
                     status: obj.status,
                     matchday: obj.matchday,
@@ -34,7 +38,7 @@ class FixtureConverter {
                     },
                     result: {
                         goalsHomeTeam: obj.result.goalsHomeTeam,
-                        goalsAwatTeam: obj.result.goalsAwatTeam
+                        goalsAwayTeam: obj.result.goalsAwayTeam
                     },
                     odds: obj.odds
                 }
@@ -56,7 +60,7 @@ class FixtureRepository {
     }
 
     insertMany(docs) {
-        this.absRep.insertMany(docs);
+        return this.absRep.insertMany(docs);
     }
 
     updateResult(fixtureId, result) {
@@ -88,6 +92,4 @@ class FixtureRepository {
     }
 }
 
-var obj = new FixtureRepository();
-
-module.exports = obj;
+module.exports = FixtureRepository;

@@ -1,4 +1,4 @@
-module.exports.compatitions = [{
+module.exports.competitions = [{
     id: 426,
     caption: "Premier League 2016/17",
     league: "PL",
@@ -8,7 +8,7 @@ module.exports.compatitions = [{
     numberOfTeams: 20,
     numberOfGames: 380,
     lastUpdated: "2016-09-09T00:00:22Z"
-    },
+},
     {
         id: 426,
         caption: "Premier League 2016/17",
@@ -367,3 +367,31 @@ module.exports.standing = [{
     "home": {"goals": 1, "goalsAgainst": 4, "wins": 0, "draws": 0, "losses": 1},
     "away": {"goals": 1, "goalsAgainst": 2, "wins": 0, "draws": 1, "losses": 1}
 }];
+
+module.exports.fixtures = [{
+    "id": 150841,
+    "competitionId": 426,
+    "date": "2016-08-13T11:30:00Z",
+    "status": "FINISHED",
+    "matchday": 1,
+    "homeTeamName": "Hull City FC",
+    "homeTeamId": 322,
+    "awayTeamName": "Leicester City FC",
+    "awayTeamId": 338,
+    "result": {"goalsHomeTeam": 2, "goalsAwayTeam": 1},
+    "odds": {"homeWin": 3.25, "draw": 3.25, "awayWin": 2.2}
+}];
+
+module.exports.teams = [{
+    "id": 322,
+    "name": "Hull City FC",
+    "shortName": "Hull",
+    "squadMarketValue": "122,250,000 €",
+    "crestUrl": "http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg"
+}, {
+    "id": 338,
+    "name": "Leicester City FC",
+    "shortName": "Foxes",
+    "squadMarketValue": "210,500,000 €",
+    "crestUrl": "http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png"
+}]

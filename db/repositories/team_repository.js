@@ -1,16 +1,14 @@
 var teamModel = require('../models/teams');
-var fixtureRepository = require('./fixture_repository');
-var competitonRepository = require('./competition_repository');
 var repositoryUtils = require('./repository_utils');
 
 var AbstractRepository = require('./abstract_repository');
 
-var Rx = require('Rx');
+var Rx = require('rx');
 
 class TeamConverter {
 
     from(obj) {
-        return Rx.just({
+        return Rx.Observable.just({
                 api_detail: {
                     id: obj.id
                 },
@@ -35,33 +33,15 @@ class TeamRepository {
     }
 
     insertMany(docs) {
-        this.absRep.insertMany(docs);
+        return this.absRep.insertMany(docs);
     }
 
-    addFixtures(teamId, fixtures) {
-
-        let that = this;
-        return fixtureRepository.insertMany(fixtures)
-            .flatMap(function (obj) {
-                let ids = [];
-                for (let ins of obj) {
-                    ids.push(ins._id);
-                }
-                return that.absRep.update({_id: teamId}, {$add: {fixtures: ids}})
-            });
+    addFixtures(teamsIds, fixturesIds) {
+        return this.absRep.update({_id: {$in : teamsIds}}, {$push: {fixtures : {$each : fixturesIds}}})
     }
 
-    addCompetition(teamId, competitions) {
-
-        let that = this;
-        return competitonRepository.insertMany(competitions)
-            .flatMap(function (obj) {
-                let ids = [];
-                for (let ins of obj) {
-                    ids.push(ins._id);
-                }
-                return that.absRep.update({_id: teamId}, {$add: {competitions: ids}})
-            });
+    addCompetition(teamsIds, competitionsIds) {
+        return this.absRep.update({_id: {$in : teamsIds}}, {$push: {competitions : {$each : competitionsIds}}})
     }
 
     getByApiId(apiId) {
@@ -78,6 +58,4 @@ class TeamRepository {
 
 }
 
-var obj = new TeamRepository();
-
-module.exports = obj;
+module.exports = TeamRepository;
