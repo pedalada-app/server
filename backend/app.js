@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression');
 
-var routes = require('./routes/index');
+var routes = require('./src/routes/index');
 
 var app = express();
 
