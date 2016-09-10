@@ -1,6 +1,6 @@
-let Client = require('football-api-client')('');
-
 let config = require('../config');
+
+let Client = require('football-api-client')(config.apiKey);
 
 let Rx = require('rx');
 
@@ -23,45 +23,45 @@ class CompetitionFixturesJob {
 
         let self = this;
 
-        if (self.matchday > self.competition.currentMatchday) {
-            return;
-        }
+        console.log("Competition fixtures job" + JSON.stringify(self.competition));
 
-        Rx.Observable.fromPromise(Client.getCompetitionById(self.competition._id)
+        Rx.Observable.fromPromise(Client.getCompetitionById(self.competition.api_detail.id)
             .getFixtures())
             .map(function (res) {
-                return res.data;
+                return res.data.fixtures;
             })
             .flatMap(function (fixtures) {
                 return fixturesRepo.insertMany(fixtures);
             })
             .flatMap(function (fixtures) {
                 self.savedFixtures = fixtures;
-                return competitionRepo.addFixtures(self.comp._id, fixtures);
+                return compRepo.addFixtures(self.competition._id, fixtures);
             })
             .flatMap(function () {
 
-                self.teamToFixturesMap = new Map();
+                self.teamToFixturesMap = {};
 
                 for (let fixture of self.savedFixtures) {
 
                     let homeTeam = fixture.homeTeam.id;
-                    this.addFixtureToMap(teamToFixturesMap, homeTeam, fixture);
+                    self.addFixtureToMap(homeTeam, fixture);
 
                     let awayTeam = fixture.awayTeam.id;
-                    this.addFixtureToMap(teamToFixturesMap, awayTeam, fixture);
+                    self.addFixtureToMap(awayTeam, fixture);
                 }
 
-                return Rx.Observable.from(self.teamToFixturesMap.keys());
+                return Rx.Observable.from(Object.keys(self.teamToFixturesMap));
 
+            })
+            .filter(function (key) {
+                return self.teamToFixturesMap.hasOwnProperty(key);
             })
             .flatMap(function (teamId) {
 
-                return teamRepo.addFixtures(teamId, self.teamToFixturesMap[teamId]);
+                return teamRepo.addFixtures([teamId], self.teamToFixturesMap[teamId]);
 
             })
             .subscribe(function () {
-
             }, function (err) {
                 console.error(err);
             }, function () {
@@ -70,12 +70,12 @@ class CompetitionFixturesJob {
 
     }
 
-    addFixtureToMap(homeTeam, fixture) {
-        let homeTeamFixtures = this.teamToFixturesMap[homeTeam] || [];
-        homeTeamFixtures.push(fixture._id);
-        this.teamToFixturesMap[homeTeam] = homeTeamFixtures;
+    addFixtureToMap(team, fixture) {
+        let fixtures = this.teamToFixturesMap[team] || [];
+        fixtures.push(fixture._id);
+        this.teamToFixturesMap[team] = fixtures;
     }
 
 }
 
-module.exports = CompetitionStandingsJob;
+module.exports = CompetitionFixturesJob;

@@ -1,10 +1,10 @@
 var chai = require('chai');
-var CompetitionRepository = require('../repositories/competition_repository');
-var TeamRepository = require('../repositories/team_repository');
-var StandingRepository = require('../repositories/standings_repository');
+var CompetitionRepository = require('../main/repositories/competition_repository');
+var TeamRepository = require('../main/repositories/team_repository');
+var StandingRepository = require('../main/repositories/standings_repository');
 var mongoose = require('mongoose');
-var competiton = require('../models/competition');
-var standing = require('../models/standings');
+var competiton = require('../main/models/competition');
+var standing = require('../main/models/standings');
 
 var Rx = require('rx');
 
@@ -117,6 +117,7 @@ describe('Compatition Repository test', function () {
             })
             .subscribe(function (comp) {
                 expect(comp.lastStanding.toString()).to.be.equal("507f1f77bcf86cd799439011");
+                expect(comp.name).to.be.equal(utils.competitions[0].name);
                 done();
             }, errorHandler);
 
@@ -136,6 +137,7 @@ describe('Compatition Repository test', function () {
             })
             .subscribe(function (comp) {
                 expect(comp.currentMatchday).to.be.equal(5);
+                expect(comp.name).to.be.equal(utils.competitions[0].name);
                 done();
             }, errorHandler)
     });

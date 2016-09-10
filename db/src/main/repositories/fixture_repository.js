@@ -64,19 +64,19 @@ class FixtureRepository {
     }
 
     updateResult(fixtureId, result) {
-        return this.absRep.update({_id : fixtureId}, {result : result});
+        return this.absRep.update({_id : fixtureId}, repositoryUtils.setFieldValue({result : result}));
     }
 
     updateStatus(fixtureId, status) {
-        return this.absRep.update({_id : fixtureId}, {status : status});
+        return this.absRep.update({_id : fixtureId}, repositoryUtils.setFieldValue({status : status}));
     }
 
     updateDate(fixtureId, date) {
-        return this.absRep.update({_id : fixtureId}, {date : date});
+        return this.absRep.update({_id : fixtureId}, repositoryUtils.setFieldValue({date : date}));
     }
 
     updateOdds(fixtureId, odds) {
-        return this.absRep.update({_id : fixtureId}, {odds : odds});
+        return this.absRep.update({_id : fixtureId}, repositoryUtils.setFieldValue({odds : odds}));
     }
 
     getByApiId(apiId) {

@@ -1,6 +1,6 @@
-let Client = require('football-api-client')('');
-
 let config = require('../config');
+
+let Client = require('football-api-client')(config.apiKey);
 
 let Rx = require('rx');
 
@@ -25,11 +25,14 @@ class CompetitionJob {
 
         self.queue = queue;
 
+        console.log("Competition job: " + self.comp.caption);
+
         Rx.Observable.fromPromise(Client.getCompetitionById(self.comp.id).getTeams())
             .map(function (res) {
                 return res.data.teams;
             })
             .flatMap(function (teams) {
+
                 return teamRepo.insertMany(teams);
             })
             .flatMap(function (teams) {
@@ -43,21 +46,26 @@ class CompetitionJob {
                 return compRepo.addTeams(comp._id, self.savedTeamsId);
             })
             .flatMap(function () {
-                return teamRepo.addCompetitions(self.savedTeamsId, self.savedComp._id);
+
+                return teamRepo.addCompetitions(self.savedTeamsId, [self.savedComp._id]);
             })
             .subscribe(function () {
 
-                let compStandingJob = new CompetitionStandingJob(self.comp._id);
-                this.queue.add(compStandingJob);
+                let compStandingJob = new CompetitionStandingJob(self.savedComp);
+                self.queue.addJob(compStandingJob);
 
-                let compFixturesJob = new CompetitionFixturesJob(self.comp._id);
-                this.queue.add(compFixturesJob);
+                // let compFixturesJob = new CompetitionFixturesJob(self.savedComp);
+                // self.queue.addJob(compFixturesJob);
 
             }, function (err) {
                 console.error(err);
+            }, function () {
+                console.log("Finished");
             })
 
 
     }
 
 }
+
+module.exports = CompetitionJob;

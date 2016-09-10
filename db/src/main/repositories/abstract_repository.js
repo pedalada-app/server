@@ -33,11 +33,24 @@ class AbstractRepository {
             })
     }
 
+    updateDocs(conditions, doc, options) {
+        return this.model.update(conditions, doc, options);
+    }
+
     update(conditions, doc) {
         var options = {
-            overwrite : true
+            overwrite : false
         };
-        return this.model.update(conditions, doc, options);
+        return this.updateDocs(conditions, doc, options);
+    }
+
+    updateMany(conditions, doc) {
+
+        var options = {
+            overwrite : true,
+            multi: true
+        };
+        return this.updateDocs(conditions, doc, options);
     }
 
     delete(id) {

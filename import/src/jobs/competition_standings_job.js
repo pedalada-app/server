@@ -1,6 +1,7 @@
-let Client = require('football-api-client')('');
-
 let config = require('../config');
+
+let Client = require('football-api-client')(config.apiKey);
+
 
 let Rx = require('rx');
 
@@ -19,21 +20,36 @@ class CompetitionStandingsJob {
 
     start(queue) {
 
-        if (this.matchday > this.competition.currentMatchday) {
+        let self = this;
+
+        if (self.matchday > self.competition.currentMatchday) {
             return;
         }
 
-        let self = this;
+        console.log("CompetitionStandingsJob comp=[" + self.competition.name + "], matchday = [" + self.matchday + "]")
 
-        Rx.Observable.fromPromise(Client.getCompetitionById(this.competition._id).getTable(this.matchday))
+        Rx.Observable.fromPromise(Client.getCompetitionById(this.competition.api_detail.id).getTable(this.matchday))
+            .map(function (res) {
+                return res.data;
+            })
             .flatMap(function (standings) {
+
                 standings.competitionId = self.competition.api_detail.id;
                 return standingRepo.insert(standings);
             })
             .subscribe(function (standing) {
 
-                if (self.competition.matchday === self.matchday) {
-                    compRepo.updateStanding(self.competition._id, standing._id);
+                if (self.competition.currentMatchday === self.matchday) {
+
+                    console.log("Updating comp matchday");
+
+                    compRepo.updateStanding(self.competition._id, standing._id)
+                        .then(function () {
+                            console.log("Updated competition match day");
+                        })
+                        .catch(function (err) {
+                            console.error(err);
+                        })
                 } else {
                     let standingsJob = new CompetitionStandingsJob(self.competition, self.matchday + 1);
                     queue.addJob(standingsJob);
