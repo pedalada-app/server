@@ -1,7 +1,6 @@
-var mongoose = require('mongoose');
 var standingsModel = require('../models/standings');
-var competitionRepository = require('./competition_repository');
-var teamRepository = require('./team_repository');
+var CompetitionRepository = require('./competition_repository');
+var TeamRepository = require('./team_repository');
 var repositoryUtils = require('./repository_utils');
 
 var AbstractRepository = require('./abstract_repository');
@@ -10,15 +9,20 @@ var Rx = require('rx');
 
 class StandingsConverter {
 
+    constructor() {
+        this.compRepo = new CompetitionRepository();
+        this.teamRepo = new TeamRepository();
+    }
+
     from(obj) {
         return Rx.Observable.zip(
-            Rx.Observable.fromPromise(competitionRepository.idMapping(obj.competitionId)),
+            Rx.Observable.fromPromise(this.compRepo.idMapping(obj.competitionId)),
             Rx.Observable.from(obj.standing)
                 .map(function (team) {
                     return team.id;
                 })
                 .flatMap(function (teamId) {
-                    return Rx.Observable.fromPromise(teamRepository.idMapping(teamId));
+                    return Rx.Observable.fromPromise(this.teamRepo.idMapping(teamId));
                 })
                 .reduce(function (acc, val) {
                     acc.push(val);
@@ -60,7 +64,7 @@ class StandingsRepository {
     }
 
     insertMany(docs) {
-        this.absRep.insertMany(docs);
+        return this.absRep.insertMany(docs);
     }
 
     getByApiId(apiId) {
@@ -76,6 +80,4 @@ class StandingsRepository {
     }
 }
 
-var obj = new StandingsRepository();
-
-module.exports = obj;
+module.exports = StandingsRepository;

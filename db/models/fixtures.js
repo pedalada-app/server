@@ -9,7 +9,8 @@ var FixtureSchema = new Schema({
         id: {
             type: Number,
             index: true,
-            required: true
+            required: true,
+            unique: true
         }
     },
 
@@ -62,7 +63,7 @@ var FixtureSchema = new Schema({
         }
     },
 
-    resule: {
+    result: {
         goalsHomeTeam: {
             type: Number,
             default: -1

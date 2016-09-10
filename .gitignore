@@ -1,2 +1,4 @@
 backend/node_modules/
+db/node_modules/
+node_modules
 .idea
