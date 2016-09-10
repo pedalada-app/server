@@ -1,9 +1,11 @@
 let Client = require('football-api-client')('');
 
+let config = require('../config');
+
 let Rx = require('rx');
 
-let StandingRepository = require('dbLib').StandingRepository;
-let CompetitionRepository = require('dbLib').CompetitionRepository;
+let StandingRepository = require(config.dbLib).StandingRepository;
+let CompetitionRepository = require(config.dbLib).CompetitionRepository;
 
 let standingRepo = new StandingRepository();
 let compRepo = new CompetitionRepository();

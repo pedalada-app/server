@@ -1,14 +1,16 @@
-var Client = require('football-api-client')('');
+let Client = require('football-api-client')('');
 
-var Rx = require('rx');
+let config = require('../config');
 
-var FixtureRepository = require('dbLib').FixtureRepository;
-var CompRepository = require('dbLib').CompetitionRepository;
-var TeamRepository = require('dbLib').TeamRepository;
+let Rx = require('rx');
 
-var fixturesRepo = new FixtureRepository();
-var compRepo = new CompRepository();
-var teamRepo = new TeamRepository();
+let FixtureRepository = require(config.dbLib).FixtureRepository;
+let CompRepository = require(config.dbLib).CompetitionRepository;
+let TeamRepository = require(config.dbLib).TeamRepository;
+
+let fixturesRepo = new FixtureRepository();
+let compRepo = new CompRepository();
+let teamRepo = new TeamRepository();
 
 
 class CompetitionFixturesJob {
@@ -19,7 +21,7 @@ class CompetitionFixturesJob {
 
     start(queue) {
 
-        var self = this;
+        let self = this;
 
         if (self.matchday > self.competition.currentMatchday) {
             return;

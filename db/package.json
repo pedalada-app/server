@@ -2,9 +2,7 @@
   "name": "db",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
+  "main": "./dist/main/index.js",
   "dependencies": {
     "mongoose": "~4.5.2",
     "rx": "^4.1.0",

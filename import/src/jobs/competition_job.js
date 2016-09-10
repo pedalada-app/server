@@ -1,15 +1,17 @@
-var Client = require('football-api-client')('');
+let Client = require('football-api-client')('');
 
-var Rx = require('rx');
+let config = require('../config');
 
-var CompRepository = require('dbLib').CompetitionRepository;
-var TeamRepository = require('dbLib').TeamRepository;
+let Rx = require('rx');
 
-var compRepo = new CompRepository();
-var teamRepo = new TeamRepository();
+let CompRepository = require(config.dbLib).CompetitionRepository;
+let TeamRepository = require(config.dbLib).TeamRepository;
 
-var CompetitionStandingJob = require('./competition_standings_job');
-var CompetitionFixturesJob = require('./competition_fixtures_job');
+let compRepo = new CompRepository();
+let teamRepo = new TeamRepository();
+
+let CompetitionStandingJob = require('./competition_standings_job');
+let CompetitionFixturesJob = require('./competition_fixtures_job');
 
 class CompetitionJob {
 

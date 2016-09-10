@@ -1,6 +1,6 @@
-var Client = require('football-api-client')('');
+let Client = require('football-api-client')('');
 
-var CompetitionJob = require('./competition_job');
+let CompetitionJob = require('./competition_job');
 
 class MainJob {
 
