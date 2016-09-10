@@ -6,5 +6,9 @@ module.exports.StandingRepository = require('./repositories/standings_repository
 module.exports.TeamRepository = require('./repositories/team_repository');
 
 module.exports.init = function (url) {
-    return mongoose.connect(url);
-}
+    return mongoose.connect(url)
+        .then(function () {
+
+            return mongoose.connection.db.dropDatabase();
+        })
+};

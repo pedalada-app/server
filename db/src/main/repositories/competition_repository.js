@@ -21,6 +21,7 @@ class CompetitionConverter {
 
 }
 
+
 class CompetitionRepository {
 
     constructor() {
@@ -36,11 +37,12 @@ class CompetitionRepository {
     }
 
     updateStanding(compId, standingId) {
-        return this.absRep.update({_id : compId}, {lastStanding : standingId});
+
+        return this.absRep.update({_id : compId}, repositoryUtils.setFieldValue({lastStanding : standingId}));
     }
 
     updateMatchDay(compId, matchDay) {
-        return this.absRep.update({_id : compId}, {currentMatchday : matchDay});
+        return this.absRep.update({_id : compId}, repositoryUtils.setFieldValue({currentMatchday: matchDay}));
     }
 
     addFixtures(compId, fixturesIds) {

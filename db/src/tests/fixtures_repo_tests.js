@@ -1,16 +1,16 @@
 var chai = require('chai');
-var CompetitionRepository = require('../repositories/competition_repository');
-var TeamRepository = require('../repositories/team_repository');
-var StandingRepository = require('../repositories/standings_repository');
-var FixturesRepository = require('../repositories/fixture_repository');
+
+var CompetitionRepository = require('../main/repositories/competition_repository');
+var TeamRepository = require('../main/repositories/team_repository');
+var StandingRepository = require('../main/repositories/standings_repository');
+var FixturesRepository = require('../main/repositories/fixture_repository');
+
 var mongoose = require('mongoose');
-var competiton = require('../models/competition');
-var fixtures = require('../models/fixtures');
-var standing = require('../models/standings');
+var fixtures = require('../main/models/fixtures');
 
 var Rx = require('rx');
 
-var utils = require('./test_utils')
+var utils = require('./test_utils');
 
 var expect = chai.expect;
 

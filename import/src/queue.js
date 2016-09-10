@@ -16,8 +16,6 @@ class Queue {
 
     start() {
 
-        console.log("start");
-
         let self = this;
 
         if (self.active) {
@@ -34,7 +32,6 @@ class Queue {
 
     addJob(job) {
 
-        console.log("addJob");
 
         let self = this;
 
@@ -51,8 +48,6 @@ class Queue {
         let self = this;
 
         return function () {
-
-            console.log("jobWrapper");
 
             if (self.tokensLeftInInterval > 0) {
 
@@ -73,7 +68,6 @@ class Queue {
 
     nextJob() {
 
-        console.log("nextJob");
 
         var self = this;
 
@@ -92,8 +86,6 @@ class Queue {
 
     startTimer() {
 
-        console.log("startTimer");
-
         let self = this;
 
         self.timer = setTimeout(function () {
@@ -106,6 +98,10 @@ class Queue {
 
                     pendingJob();
 
+                } else {
+
+                    break;
+
                 }
 
             }
@@ -115,9 +111,6 @@ class Queue {
     }
 
     cleanUp() {
-
-        console.log("cleanUp");
-
 
         let self = this;
 

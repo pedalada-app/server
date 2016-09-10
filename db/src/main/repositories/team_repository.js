@@ -37,11 +37,12 @@ class TeamRepository {
     }
 
     addFixtures(teamsIds, fixturesIds) {
-        return this.absRep.update({_id: {$in : teamsIds}}, {$push: {fixtures : {$each : fixturesIds}}})
+
+        return this.absRep.updateMany({_id: {$in : teamsIds}}, {$push: {fixtures : {$each : fixturesIds}}})
     }
 
     addCompetitions(teamsIds, competitionsIds) {
-        return this.absRep.update({_id: {$in : teamsIds}}, {$push: {competitions : {$each : competitionsIds}}})
+        return this.absRep.updateMany({_id: {$in : teamsIds}}, {$push: {competitions : {$each : competitionsIds}}})
     }
 
     getByApiId(apiId) {
