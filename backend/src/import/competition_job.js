@@ -41,7 +41,7 @@ class CompetitionJob {
                 return compRepo.addTeams(comp._id, self.savedTeamsId);
             })
             .flatMap(function () {
-                return teamRepo.addCompetition(self.savedTeamsId, self.savedComp._id);
+                return teamRepo.addCompetitions(self.savedTeamsId, self.savedComp._id);
             })
             .subscribe(function () {
 
