@@ -1,19 +1,20 @@
 var Client = require('football-api-client')('');
 
+var Rx = require('rx');
+
 var CompRepository = require('dbLib').CompetitionRepository;
+var TeamRepository = require('dbLib').TeamRepository;
+
 var compRepo = new CompRepository();
+var teamRepo = new TeamRepository();
 
-var TeamJob = require('./team_job');
-
-var CompetitionStandingJob = require('./competition_standings');
-var CompetitionFixturesJob = require('./competition_fixtures');
+var CompetitionStandingJob = require('./competition_standings_job');
+var CompetitionFixturesJob = require('./competition_fixtures_job');
 
 class CompetitionJob {
 
     constructor(comp) {
         this.comp = comp;
-        this.teamCount = 0;
-        this.teamIds = [];
     }
 
     start(queue) {
@@ -22,55 +23,39 @@ class CompetitionJob {
 
         self.queue = queue;
 
-        compRepo.insert(self.comp)
-            .then(function (savedComp) {
-
-                self.compDbId = savedComp._id;
-
-                return Client.getCompetitionById(self.comp.id)
-                    .getTeams();
-
+        Rx.Observable.fromPromise(Client.getCompetitionById(self.comp.id).getTeams())
+            .map(function (res) {
+                return res.data.teams;
             })
-            .then(function () {
-
-                for (let team of teams) {
-                    CompetitionJob.createTeamJob(queue, team, self.callback);
-                }
-
+            .flatMap(function (teams) {
+                return teamRepo.insertMany(teams);
             })
-            .catch(function (err) {
-                console.error(err);
-                queue.addJob(self);
-            });
-
-    }
-
-    static createTeamJob(queue, team, callback) {
-
-        queue.addJob(new TeamJob(team, callback));
-
-    }
-
-    callback(team) {
-
-        this.teamIds.push(team._id);
-
-        this.teamCount++;
-
-        if (this.teamCount === this.comp.numberOfTeams) {
-
-            compRepo.addTeams(this.compDbId, this.teamIds)
-                .catch(function (err) {
-                    console.error(err);
+            .flatMap(function (teams) {
+                self.savedTeamsId = teams.map(function (team) {
+                    return team._id;
                 });
+                return compRepo.insert(self.comp);
+            })
+            .flatMap(function (comp) {
+                self.savedComp = comp;
+                return compRepo.addTeams(comp._id, self.savedTeamsId);
+            })
+            .flatMap(function () {
+                return teamRepo.addCompetition(self.savedTeamsId, self.savedComp._id);
+            })
+            .subscribe(function () {
 
-            let compStandingJob = new CompetitionStandingJob(self.compDbId);
-            this.queue.add(compStandingJob);
+                let compStandingJob = new CompetitionStandingJob(self.comp._id);
+                this.queue.add(compStandingJob);
 
-            let compFixturesJob = new CompetitionFixturesJob(self.compDbId);
-            this.queue.add(compFixturesJob);
+                let compFixturesJob = new CompetitionFixturesJob(self.comp._id);
+                this.queue.add(compFixturesJob);
 
-        }
+            }, function (err) {
+                console.error(err);
+            })
+
 
     }
+
 }

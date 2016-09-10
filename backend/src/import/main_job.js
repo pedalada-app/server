@@ -13,6 +13,11 @@ class MainJob {
 
                 for (let competition of competitions) {
                     let compJob = new CompetitionJob(competition);
+
+                    if (compJob !== 426) {
+                        continue;
+                    }
+
                     queue.addJob(compJob);
                 }
 
