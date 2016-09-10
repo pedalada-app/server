@@ -1,0 +1,23 @@
+{
+  "name": "live",
+  "version": "1.0.0",
+  "description": "live",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "body-parser": "~1.15.1",
+    "debug": "~2.2.0",
+    "football-api-client": "^1.0.1",
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1",
+    "validator": "^5.5.0",
+    "morgan": "~1.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  }
+}
