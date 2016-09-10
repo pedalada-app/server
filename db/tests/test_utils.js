@@ -66,306 +66,348 @@ module.exports.competitions = [{
     }
 ];
 
-module.exports.standing = [{
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/65"}},
-    "position": 1,
-    "teamName": "Manchester City FC",
-    "crestURI": "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
-    "playedGames": 3,
-    "points": 9,
-    "goals": 9,
-    "goalsAgainst": 3,
-    "goalDifference": 6,
-    "wins": 3,
-    "draws": 0,
-    "losses": 0,
-    "home": {"goals": 5, "goalsAgainst": 2, "wins": 2, "draws": 0, "losses": 0},
-    "away": {"goals": 4, "goalsAgainst": 1, "wins": 1, "draws": 0, "losses": 0}
+module.exports.standing = {
+    "leagueCaption": "Premier League 2016/17",
+    "competitionId" : 426,
+    "matchday": 4,
+    "standing": [{
+        "rank": 1,
+        "team": "ManCity",
+        "teamId": 65,
+        "playedGames": 3,
+        "crestURI": "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
+        "points": 9,
+        "goals": 9,
+        "goalsAgainst": 3,
+        "goalDifference": 6
+    }, {
+        "rank": 2,
+        "team": "Chelsea",
+        "teamId": 61,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/5/5c/Chelsea_crest.svg",
+        "points": 9,
+        "goals": 7,
+        "goalsAgainst": 2,
+        "goalDifference": 5
+    }, {
+        "rank": 3,
+        "team": "ManU",
+        "teamId": 66,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg",
+        "points": 9,
+        "goals": 6,
+        "goalsAgainst": 1,
+        "goalDifference": 5
+    }, {
+        "rank": 4,
+        "team": "Everton",
+        "teamId": 62,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/f/f9/Everton_FC.svg",
+        "points": 7,
+        "goals": 4,
+        "goalsAgainst": 2,
+        "goalDifference": 2
+    }, {
+        "rank": 5,
+        "team": "Hull",
+        "teamId": 322,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg",
+        "points": 6,
+        "goals": 4,
+        "goalsAgainst": 2,
+        "goalDifference": 2
+    }, {
+        "rank": 6,
+        "team": "Middlesbrough",
+        "teamId": 343,
+        "playedGames": 3,
+        "crestURI": "https://upload.wikimedia.org/wikipedia/en/2/2c/Middlesbrough_FC_crest.svg",
+        "points": 5,
+        "goals": 3,
+        "goalsAgainst": 2,
+        "goalDifference": 1
+    }, {
+        "rank": 6,
+        "team": "Spurs",
+        "teamId": 73,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/b/b4/Tottenham_Hotspur.svg",
+        "points": 5,
+        "goals": 3,
+        "goalsAgainst": 2,
+        "goalDifference": 1
+    }, {
+        "rank": 8,
+        "team": "Arsenal",
+        "teamId": 57,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg",
+        "points": 4,
+        "goals": 6,
+        "goalsAgainst": 5,
+        "goalDifference": 1
+    }, {
+        "rank": 9,
+        "team": "Foxes",
+        "teamId": 338,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png",
+        "points": 4,
+        "goals": 3,
+        "goalsAgainst": 3,
+        "goalDifference": 0
+    }, {
+        "rank": 10,
+        "team": "West Bromwich",
+        "teamId": 74,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg",
+        "points": 4,
+        "goals": 2,
+        "goalsAgainst": 2,
+        "goalDifference": 0
+    }, {
+        "rank": 11,
+        "team": "Liverpool",
+        "teamId": 64,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/0/0a/FC_Liverpool.svg",
+        "points": 4,
+        "goals": 5,
+        "goalsAgainst": 6,
+        "goalDifference": -1
+    }, {
+        "rank": 12,
+        "team": "West Ham",
+        "teamId": 563,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/e/e0/West_Ham_United_FC.svg",
+        "points": 3,
+        "goals": 3,
+        "goalsAgainst": 5,
+        "goalDifference": -2
+    }, {
+        "rank": 13,
+        "team": "Burnley",
+        "teamId": 328,
+        "playedGames": 3,
+        "crestURI": "https://upload.wikimedia.org/wikipedia/en/0/02/Burnley_FC_badge.png",
+        "points": 3,
+        "goals": 2,
+        "goalsAgainst": 4,
+        "goalDifference": -2
+    }, {
+        "rank": 13,
+        "team": "Swans",
+        "teamId": 72,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/a/ab/Swansea_City_Logo.svg",
+        "points": 3,
+        "goals": 2,
+        "goalsAgainst": 4,
+        "goalDifference": -2
+    }, {
+        "rank": 15,
+        "team": "Southampton",
+        "teamId": 340,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/c/c9/FC_Southampton.svg",
+        "points": 2,
+        "goals": 2,
+        "goalsAgainst": 4,
+        "goalDifference": -2
+    }, {
+        "rank": 16,
+        "team": "Sunderland",
+        "teamId": 71,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/6/60/AFC_Sunderland.svg",
+        "points": 1,
+        "goals": 3,
+        "goalsAgainst": 5,
+        "goalDifference": -2
+    }, {
+        "rank": 17,
+        "team": "Crystal",
+        "teamId": 354,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/b/bf/Crystal_Palace_F.C._logo_%282013%29.png",
+        "points": 1,
+        "goals": 1,
+        "goalsAgainst": 3,
+        "goalDifference": -2
+    }, {
+        "rank": 18,
+        "team": "Watford",
+        "teamId": 346,
+        "playedGames": 3,
+        "crestURI": "https://upload.wikimedia.org/wikipedia/en/e/e2/Watford.svg",
+        "points": 1,
+        "goals": 3,
+        "goalsAgainst": 6,
+        "goalDifference": -3
+    }, {
+        "rank": 19,
+        "team": "Bournemouth",
+        "teamId": 1044,
+        "playedGames": 3,
+        "crestURI": "https://upload.wikimedia.org/wikipedia/de/4/41/Afc_bournemouth.svg",
+        "points": 1,
+        "goals": 2,
+        "goalsAgainst": 5,
+        "goalDifference": -3
+    }, {
+        "rank": 20,
+        "team": "Stoke",
+        "teamId": 70,
+        "playedGames": 3,
+        "crestURI": "http://upload.wikimedia.org/wikipedia/de/a/a3/Stoke_City.svg",
+        "points": 1,
+        "goals": 2,
+        "goalsAgainst": 6,
+        "goalDifference": -4
+    }]
+}
+
+module.exports.pmTeams = [{
+        "id": 322,
+        "name": "Hull City FC",
+        "shortName": "Hull",
+        "squadMarketValue": "122,250,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg"
+    }, {
+        "id": 338,
+        "name": "Leicester City FC",
+        "shortName": "Foxes",
+        "squadMarketValue": "210,500,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png"
+    }, {
+        "id": 340,
+        "name": "Southampton FC",
+        "shortName": "Southampton",
+        "squadMarketValue": "199,000,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/c/c9/FC_Southampton.svg"
+    }, {
+        "id": 346,
+        "name": "Watford FC",
+        "shortName": "Watford",
+        "squadMarketValue": "128,500,000 €",
+        "crestUrl": "https://upload.wikimedia.org/wikipedia/en/e/e2/Watford.svg"
+    }, {
+        "id": 343,
+        "name": "Middlesbrough FC",
+        "shortName": "Middlesbrough",
+        "squadMarketValue": "104,750,000 €",
+        "crestUrl": "https://upload.wikimedia.org/wikipedia/en/2/2c/Middlesbrough_FC_crest.svg"
+    }, {
+        "id": 70,
+        "name": "Stoke City FC",
+        "shortName": "Stoke",
+        "squadMarketValue": "172,250,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/a/a3/Stoke_City.svg"
+    }, {
+        "id": 62,
+        "name": "Everton FC",
+        "shortName": "Everton",
+        "squadMarketValue": "239,250,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/f/f9/Everton_FC.svg"
+    }, {
+        "id": 73,
+        "name": "Tottenham Hotspur FC",
+        "shortName": "Spurs",
+        "squadMarketValue": "365,500,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/b/b4/Tottenham_Hotspur.svg"
+    }, {
+        "id": 354,
+        "name": "Crystal Palace FC",
+        "shortName": "Crystal",
+        "squadMarketValue": "157,750,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/b/bf/Crystal_Palace_F.C._logo_(2013).png"
+    }, {
+        "id": 74,
+        "name": "West Bromwich Albion FC",
+        "shortName": "West Bromwich",
+        "squadMarketValue": "107,600,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg"
+    }, {
+        "id": 328,
+        "name": "Burnley FC",
+        "shortName": "Burnley",
+        "squadMarketValue": "66,500,000 €",
+        "crestUrl": "https://upload.wikimedia.org/wikipedia/en/0/02/Burnley_FC_badge.png"
+    }, {
+        "id": 72,
+        "name": "Swansea City FC",
+        "shortName": "Swans",
+        "squadMarketValue": "106,100,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/a/ab/Swansea_City_Logo.svg"
+    }, {
+        "id": 65,
+        "name": "Manchester City FC",
+        "shortName": "ManCity",
+        "squadMarketValue": "518,000,000 €",
+        "crestUrl": "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg"
+    }, {
+        "id": 71,
+        "name": "Sunderland AFC",
+        "shortName": "Sunderland",
+        "squadMarketValue": "92,500,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/6/60/AFC_Sunderland.svg"
+    }, {
+        "id": 1044,
+        "name": "AFC Bournemouth",
+        "shortName": "Bournemouth",
+        "squadMarketValue": "121,750,000 €",
+        "crestUrl": "https://upload.wikimedia.org/wikipedia/de/4/41/Afc_bournemouth.svg"
+    }, {
+        "id": 66,
+        "name": "Manchester United FC",
+        "shortName": "ManU",
+        "squadMarketValue": "534,250,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg"
+    }, {
+        "id": 57,
+        "name": "Arsenal FC",
+        "shortName": "Arsenal",
+        "squadMarketValue": "468,500,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg"
+    }, {
+        "id": 64,
+        "name": "Liverpool FC",
+        "shortName": "Liverpool",
+        "squadMarketValue": "387,200,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/0/0a/FC_Liverpool.svg"
+    }, {
+        "id": 61,
+        "name": "Chelsea FC",
+        "shortName": "Chelsea",
+        "squadMarketValue": "514,800,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/5/5c/Chelsea_crest.svg"
+    }, {
+        "id": 563,
+        "name": "West Ham United FC",
+        "shortName": "West Ham",
+        "squadMarketValue": "241,500,000 €",
+        "crestUrl": "http://upload.wikimedia.org/wikipedia/de/e/e0/West_Ham_United_FC.svg"
+    }];
+
+
+module.exports.teams = [{
+    "id": 322,
+    "name": "Hull City FC",
+    "shortName": "Hull",
+    "squadMarketValue": "122,250,000 €",
+    "crestUrl": "http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg"
 }, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/61"}},
-    "position": 2,
-    "teamName": "Chelsea FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/5/5c/Chelsea_crest.svg",
-    "playedGames": 3,
-    "points": 9,
-    "goals": 7,
-    "goalsAgainst": 2,
-    "goalDifference": 5,
-    "wins": 3,
-    "draws": 0,
-    "losses": 0,
-    "home": {"goals": 5, "goalsAgainst": 1, "wins": 2, "draws": 0, "losses": 0},
-    "away": {"goals": 2, "goalsAgainst": 1, "wins": 1, "draws": 0, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/66"}},
-    "position": 3,
-    "teamName": "Manchester United FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg",
-    "playedGames": 3,
-    "points": 9,
-    "goals": 6,
-    "goalsAgainst": 1,
-    "goalDifference": 5,
-    "wins": 3,
-    "draws": 0,
-    "losses": 0,
-    "home": {"goals": 2, "goalsAgainst": 0, "wins": 1, "draws": 0, "losses": 0},
-    "away": {"goals": 4, "goalsAgainst": 1, "wins": 2, "draws": 0, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/62"}},
-    "position": 4,
-    "teamName": "Everton FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/f/f9/Everton_FC.svg",
-    "playedGames": 3,
-    "points": 7,
-    "goals": 4,
-    "goalsAgainst": 2,
-    "goalDifference": 2,
-    "wins": 2,
-    "draws": 1,
-    "losses": 0,
-    "home": {"goals": 2, "goalsAgainst": 1, "wins": 1, "draws": 1, "losses": 0},
-    "away": {"goals": 2, "goalsAgainst": 1, "wins": 1, "draws": 0, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/322"}},
-    "position": 5,
-    "teamName": "Hull City FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg",
-    "playedGames": 3,
-    "points": 6,
-    "goals": 4,
-    "goalsAgainst": 2,
-    "goalDifference": 2,
-    "wins": 2,
-    "draws": 0,
-    "losses": 1,
-    "home": {"goals": 2, "goalsAgainst": 2, "wins": 1, "draws": 0, "losses": 1},
-    "away": {"goals": 2, "goalsAgainst": 0, "wins": 1, "draws": 0, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/343"}},
-    "position": 6,
-    "teamName": "Middlesbrough FC",
-    "crestURI": "https://upload.wikimedia.org/wikipedia/en/2/2c/Middlesbrough_FC_crest.svg",
-    "playedGames": 3,
-    "points": 5,
-    "goals": 3,
-    "goalsAgainst": 2,
-    "goalDifference": 1,
-    "wins": 1,
-    "draws": 2,
-    "losses": 0,
-    "home": {"goals": 1, "goalsAgainst": 1, "wins": 0, "draws": 1, "losses": 0},
-    "away": {"goals": 2, "goalsAgainst": 1, "wins": 1, "draws": 1, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/73"}},
-    "position": 6,
-    "teamName": "Tottenham Hotspur FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/b/b4/Tottenham_Hotspur.svg",
-    "playedGames": 3,
-    "points": 5,
-    "goals": 3,
-    "goalsAgainst": 2,
-    "goalDifference": 1,
-    "wins": 1,
-    "draws": 2,
-    "losses": 0,
-    "home": {"goals": 2, "goalsAgainst": 1, "wins": 1, "draws": 1, "losses": 0},
-    "away": {"goals": 1, "goalsAgainst": 1, "wins": 0, "draws": 1, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/57"}},
-    "position": 8,
-    "teamName": "Arsenal FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg",
-    "playedGames": 3,
-    "points": 4,
-    "goals": 6,
-    "goalsAgainst": 5,
-    "goalDifference": 1,
-    "wins": 1,
-    "draws": 1,
-    "losses": 1,
-    "home": {"goals": 3, "goalsAgainst": 4, "wins": 0, "draws": 0, "losses": 1},
-    "away": {"goals": 3, "goalsAgainst": 1, "wins": 1, "draws": 1, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/338"}},
-    "position": 9,
-    "teamName": "Leicester City FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png",
-    "playedGames": 3,
-    "points": 4,
-    "goals": 3,
-    "goalsAgainst": 3,
-    "goalDifference": 0,
-    "wins": 1,
-    "draws": 1,
-    "losses": 1,
-    "home": {"goals": 2, "goalsAgainst": 1, "wins": 1, "draws": 1, "losses": 0},
-    "away": {"goals": 1, "goalsAgainst": 2, "wins": 0, "draws": 0, "losses": 1}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/74"}},
-    "position": 10,
-    "teamName": "West Bromwich Albion FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg",
-    "playedGames": 3,
-    "points": 4,
-    "goals": 2,
-    "goalsAgainst": 2,
-    "goalDifference": 0,
-    "wins": 1,
-    "draws": 1,
-    "losses": 1,
-    "home": {"goals": 1, "goalsAgainst": 2, "wins": 0, "draws": 1, "losses": 1},
-    "away": {"goals": 1, "goalsAgainst": 0, "wins": 1, "draws": 0, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/64"}},
-    "position": 11,
-    "teamName": "Liverpool FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/0/0a/FC_Liverpool.svg",
-    "playedGames": 3,
-    "points": 4,
-    "goals": 5,
-    "goalsAgainst": 6,
-    "goalDifference": -1,
-    "wins": 1,
-    "draws": 1,
-    "losses": 1,
-    "home": {"goals": 0, "goalsAgainst": 0, "wins": 0, "draws": 0, "losses": 0},
-    "away": {"goals": 5, "goalsAgainst": 6, "wins": 1, "draws": 1, "losses": 1}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/563"}},
-    "position": 12,
-    "teamName": "West Ham United FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/e/e0/West_Ham_United_FC.svg",
-    "playedGames": 3,
-    "points": 3,
-    "goals": 3,
-    "goalsAgainst": 5,
-    "goalDifference": -2,
-    "wins": 1,
-    "draws": 0,
-    "losses": 2,
-    "home": {"goals": 1, "goalsAgainst": 0, "wins": 1, "draws": 0, "losses": 0},
-    "away": {"goals": 2, "goalsAgainst": 5, "wins": 0, "draws": 0, "losses": 2}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/328"}},
-    "position": 13,
-    "teamName": "Burnley FC",
-    "crestURI": "https://upload.wikimedia.org/wikipedia/en/0/02/Burnley_FC_badge.png",
-    "playedGames": 3,
-    "points": 3,
-    "goals": 2,
-    "goalsAgainst": 4,
-    "goalDifference": -2,
-    "wins": 1,
-    "draws": 0,
-    "losses": 2,
-    "home": {"goals": 2, "goalsAgainst": 1, "wins": 1, "draws": 0, "losses": 1},
-    "away": {"goals": 0, "goalsAgainst": 3, "wins": 0, "draws": 0, "losses": 1}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/72"}},
-    "position": 13,
-    "teamName": "Swansea City FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/a/ab/Swansea_City_Logo.svg",
-    "playedGames": 3,
-    "points": 3,
-    "goals": 2,
-    "goalsAgainst": 4,
-    "goalDifference": -2,
-    "wins": 1,
-    "draws": 0,
-    "losses": 2,
-    "home": {"goals": 0, "goalsAgainst": 2, "wins": 0, "draws": 0, "losses": 1},
-    "away": {"goals": 2, "goalsAgainst": 2, "wins": 1, "draws": 0, "losses": 1}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/340"}},
-    "position": 15,
-    "teamName": "Southampton FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/c/c9/FC_Southampton.svg",
-    "playedGames": 3,
-    "points": 2,
-    "goals": 2,
-    "goalsAgainst": 4,
-    "goalDifference": -2,
-    "wins": 0,
-    "draws": 2,
-    "losses": 1,
-    "home": {"goals": 2, "goalsAgainst": 2, "wins": 0, "draws": 2, "losses": 0},
-    "away": {"goals": 0, "goalsAgainst": 2, "wins": 0, "draws": 0, "losses": 1}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/71"}},
-    "position": 16,
-    "teamName": "Sunderland AFC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/6/60/AFC_Sunderland.svg",
-    "playedGames": 3,
-    "points": 1,
-    "goals": 3,
-    "goalsAgainst": 5,
-    "goalDifference": -2,
-    "wins": 0,
-    "draws": 1,
-    "losses": 2,
-    "home": {"goals": 1, "goalsAgainst": 2, "wins": 0, "draws": 0, "losses": 1},
-    "away": {"goals": 2, "goalsAgainst": 3, "wins": 0, "draws": 1, "losses": 1}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/354"}},
-    "position": 17,
-    "teamName": "Crystal Palace FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/b/bf/Crystal_Palace_F.C._logo_(2013).png",
-    "playedGames": 3,
-    "points": 1,
-    "goals": 1,
-    "goalsAgainst": 3,
-    "goalDifference": -2,
-    "wins": 0,
-    "draws": 1,
-    "losses": 2,
-    "home": {"goals": 1, "goalsAgainst": 2, "wins": 0, "draws": 1, "losses": 1},
-    "away": {"goals": 0, "goalsAgainst": 1, "wins": 0, "draws": 0, "losses": 1}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/346"}},
-    "position": 18,
-    "teamName": "Watford FC",
-    "crestURI": "https://upload.wikimedia.org/wikipedia/en/e/e2/Watford.svg",
-    "playedGames": 3,
-    "points": 1,
-    "goals": 3,
-    "goalsAgainst": 6,
-    "goalDifference": -3,
-    "wins": 0,
-    "draws": 1,
-    "losses": 2,
-    "home": {"goals": 2, "goalsAgainst": 5, "wins": 0, "draws": 0, "losses": 2},
-    "away": {"goals": 1, "goalsAgainst": 1, "wins": 0, "draws": 1, "losses": 0}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/1044"}},
-    "position": 19,
-    "teamName": "AFC Bournemouth",
-    "crestURI": "https://upload.wikimedia.org/wikipedia/de/4/41/Afc_bournemouth.svg",
-    "playedGames": 3,
-    "points": 1,
-    "goals": 2,
-    "goalsAgainst": 5,
-    "goalDifference": -3,
-    "wins": 0,
-    "draws": 1,
-    "losses": 2,
-    "home": {"goals": 1, "goalsAgainst": 3, "wins": 0, "draws": 0, "losses": 1},
-    "away": {"goals": 1, "goalsAgainst": 2, "wins": 0, "draws": 1, "losses": 1}
-}, {
-    "_links": {"team": {"href": "http://api.football-data.org/v1/teams/70"}},
-    "position": 20,
-    "teamName": "Stoke City FC",
-    "crestURI": "http://upload.wikimedia.org/wikipedia/de/a/a3/Stoke_City.svg",
-    "playedGames": 3,
-    "points": 1,
-    "goals": 2,
-    "goalsAgainst": 6,
-    "goalDifference": -4,
-    "wins": 0,
-    "draws": 1,
-    "losses": 2,
-    "home": {"goals": 1, "goalsAgainst": 4, "wins": 0, "draws": 0, "losses": 1},
-    "away": {"goals": 1, "goalsAgainst": 2, "wins": 0, "draws": 1, "losses": 1}
+    "id": 338,
+    "name": "Leicester City FC",
+    "shortName": "Foxes",
+    "squadMarketValue": "210,500,000 €",
+    "crestUrl": "http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png"
 }];
 
 module.exports.fixtures = [{
@@ -382,16 +424,3 @@ module.exports.fixtures = [{
     "odds": {"homeWin": 3.25, "draw": 3.25, "awayWin": 2.2}
 }];
 
-module.exports.teams = [{
-    "id": 322,
-    "name": "Hull City FC",
-    "shortName": "Hull",
-    "squadMarketValue": "122,250,000 €",
-    "crestUrl": "http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg"
-}, {
-    "id": 338,
-    "name": "Leicester City FC",
-    "shortName": "Foxes",
-    "squadMarketValue": "210,500,000 €",
-    "crestUrl": "http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png"
-}]

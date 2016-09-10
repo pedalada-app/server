@@ -15,17 +15,19 @@ class StandingsConverter {
     }
 
     from(obj) {
+        var self = this;
         return Rx.Observable.zip(
-            Rx.Observable.fromPromise(this.compRepo.idMapping(obj.competitionId)),
+            Rx.Observable.fromPromise(self.compRepo.idMapping(obj.competitionId)),
             Rx.Observable.from(obj.standing)
                 .map(function (team) {
-                    return team.id;
+                    return team.teamId;
                 })
                 .flatMap(function (teamId) {
-                    return Rx.Observable.fromPromise(this.teamRepo.idMapping(teamId));
+                    return Rx.Observable.fromPromise(self.teamRepo.idMapping(teamId));
                 })
                 .reduce(function (acc, val) {
                     acc.push(val);
+                    return acc;
                 }, []),
             function (compId, standingTeamIds) {
 
@@ -35,8 +37,8 @@ class StandingsConverter {
 
                     standing[i] = {
                         teamId: standingTeamIds[i],
-                        name: team.teamName,
-                        playedGames: playedGame,
+                        name: team.team,
+                        playedGames: team.playedGames,
                         points: team.points,
                         goals: team.goals,
                         goalsAgainst: team.goalsAgainst
@@ -67,17 +69,14 @@ class StandingsRepository {
         return this.absRep.insertMany(docs);
     }
 
-    getByApiId(apiId) {
-        return repositoryUtils.getByApiId(this, apiId);
+    removeStanding(standId) {
+        return this.absRep.delete(standId);
     }
 
     getById(id) {
         return repositoryUtils.getById(this, id);
     }
 
-    idMapping(id) {
-        return this.absRep.idMapping(id);
-    }
 }
 
 module.exports = StandingsRepository;

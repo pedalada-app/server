@@ -40,7 +40,7 @@ class TeamRepository {
         return this.absRep.update({_id: {$in : teamsIds}}, {$push: {fixtures : {$each : fixturesIds}}})
     }
 
-    addCompetition(teamsIds, competitionsIds) {
+    addCompetitions(teamsIds, competitionsIds) {
         return this.absRep.update({_id: {$in : teamsIds}}, {$push: {competitions : {$each : competitionsIds}}})
     }
 

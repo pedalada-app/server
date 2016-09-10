@@ -101,27 +101,160 @@ describe('Fixtures Repository test', function () {
     });
 
     it('update status', function (done) {
-        errorHandler("Not implemented yet");
+        let comp, team1, team2, id;
+        Rx.Observable.zip(compRepo.insert(utils.competitions[0]),
+            teamRepo.insert(utils.teams[0]),
+            teamRepo.insert(utils.teams[1]))
+            .flatMap(function (arr) {
+                comp = arr[0];
+                team1 = arr[1];
+                team2 = arr[2];
+                return fixtRepo.insert(utils.fixtures[0])
+            })
+            .flatMap(function (fixt) {
+                id = fixt._id;
+                return fixtRepo.updateStatus(fixt._id, 'TIMED');
+            })
+            .flatMap(function (status) {
+                expect(status.ok).to.be.equal(1);
+                expect(status.n).to.be.equal(1);
+                return Rx.Observable.fromPromise(fixtures.findOne({_id: id}));
+            })
+            .subscribe(function (fixt) {
+                expect(fixt.status).to.be.equal('TIMED');
+                done();
+            }, errorHandler);
     });
 
     it('update date', function (done) {
-        errorHandler("Not implemented yet");
+        let comp, team1, team2, id;
+        let date = new Date();
+
+        Rx.Observable.zip(compRepo.insert(utils.competitions[0]),
+            teamRepo.insert(utils.teams[0]),
+            teamRepo.insert(utils.teams[1]))
+            .flatMap(function (arr) {
+                comp = arr[0];
+                team1 = arr[1];
+                team2 = arr[2];
+                return fixtRepo.insert(utils.fixtures[0])
+            })
+            .flatMap(function (fixt) {
+                id = fixt._id;
+                return fixtRepo.updateDate(fixt._id, date.toString());
+            })
+            .flatMap(function (status) {
+                expect(status.ok).to.be.equal(1);
+                expect(status.n).to.be.equal(1);
+                return Rx.Observable.fromPromise(fixtures.findOne({_id: id}));
+            })
+            .subscribe(function (fixt) {
+                expect(fixt.date.toString()).to.be.equal(date.toString());
+                done();
+            }, errorHandler);
     });
 
     it('update odds', function (done) {
-        errorHandler("Not implemented yet");
+        let comp, team1, team2, id;
+        let odds = {homeWin : 0.5, awayWin : 0.5, draw : 0.5};
+
+        Rx.Observable.zip(compRepo.insert(utils.competitions[0]),
+            teamRepo.insert(utils.teams[0]),
+            teamRepo.insert(utils.teams[1]))
+            .flatMap(function (arr) {
+                comp = arr[0];
+                team1 = arr[1];
+                team2 = arr[2];
+                return fixtRepo.insert(utils.fixtures[0])
+            })
+            .flatMap(function (fixt) {
+                id = fixt._id;
+                return fixtRepo.updateOdds(fixt._id, odds);
+            })
+            .flatMap(function (status) {
+                expect(status.ok).to.be.equal(1);
+                expect(status.n).to.be.equal(1);
+                return Rx.Observable.fromPromise(fixtures.findOne({_id: id}));
+            })
+            .subscribe(function (fixt) {
+                expect(fixt.odds.homeWin).to.be.equal(odds.homeWin);
+                expect(fixt.odds.awayWin).to.be.equal(odds.awayWin);
+                expect(fixt.odds.draw).to.be.equal(odds.draw);
+                done();
+            }, errorHandler);
     });
 
     it('get by api id', function (done) {
-        errorHandler("Not implemented yet");
+        let comp, team1, team2, expected;
+        Rx.Observable.zip(compRepo.insert(utils.competitions[0]),
+            teamRepo.insert(utils.teams[0]),
+            teamRepo.insert(utils.teams[1]))
+            .flatMap(function (arr) {
+                comp = arr[0];
+                team1 = arr[1];
+                team2 = arr[2];
+                return fixtRepo.insert(utils.fixtures[0])
+            })
+            .flatMap(function (fixt) {
+                expected = fixt;
+                return fixtRepo.getByApiId(fixt.api_detail.id);
+            })
+            .subscribe(function (actual) {
+                expect(expected._id.toString).to.be.equal(actual._id.toString);
+                expect(expected.competitionId.toString()).to.be.equal(actual.competitionId.toString());
+                expect(expected.homeTeam.id.toString()).to.be.equal(actual.homeTeam.id.toString());
+                expect(expected.homeTeam.name).to.be.equal(actual.homeTeam.name);
+                expect(expected.awayTeam.id.toString()).to.be.equal(actual.awayTeam.id.toString());
+                expect(expected.awayTeam.name).to.be.equal(actual.awayTeam.name);
+                done();
+            }, errorHandler)
     });
 
     it('get by id', function (done) {
-        errorHandler("Not implemented yet");
+        let comp, team1, team2, expected;
+        Rx.Observable.zip(compRepo.insert(utils.competitions[0]),
+            teamRepo.insert(utils.teams[0]),
+            teamRepo.insert(utils.teams[1]))
+            .flatMap(function (arr) {
+                comp = arr[0];
+                team1 = arr[1];
+                team2 = arr[2];
+                return fixtRepo.insert(utils.fixtures[0])
+            })
+            .flatMap(function (fixt) {
+                expected = fixt;
+                return fixtRepo.getById(fixt._id);
+            })
+            .subscribe(function (actual) {
+                expect(expected._id.toString).to.be.equal(actual._id.toString);
+                expect(expected.competitionId.toString()).to.be.equal(actual.competitionId.toString());
+                expect(expected.homeTeam.id.toString()).to.be.equal(actual.homeTeam.id.toString());
+                expect(expected.homeTeam.name).to.be.equal(actual.homeTeam.name);
+                expect(expected.awayTeam.id.toString()).to.be.equal(actual.awayTeam.id.toString());
+                expect(expected.awayTeam.name).to.be.equal(actual.awayTeam.name);
+                done();
+            }, errorHandler)
     });
 
     it('id mapping', function (done) {
-        errorHandler("Not implemented yet");
+        let comp, team1, team2, expected;
+        Rx.Observable.zip(compRepo.insert(utils.competitions[0]),
+            teamRepo.insert(utils.teams[0]),
+            teamRepo.insert(utils.teams[1]))
+            .flatMap(function (arr) {
+                comp = arr[0];
+                team1 = arr[1];
+                team2 = arr[2];
+                return fixtRepo.insert(utils.fixtures[0])
+            })
+            .flatMap(function (fixt) {
+                expected = fixt._id.toString();
+                return fixtRepo.idMapping(fixt.api_detail.id);
+            })
+            .subscribe(function (actual) {
+                expect(expected).to.be.equal(actual.toString());
+                done();
+            }, errorHandler)
     });
 
 });
