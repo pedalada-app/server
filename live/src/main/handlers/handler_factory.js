@@ -1,3 +1,5 @@
+"use strict";
+
 var CompetitionUpdateHandler = require('./competition_update_handler');
 var FixtureUpdateHandler = require('./fixture_update_handler');
 
