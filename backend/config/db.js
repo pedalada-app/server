@@ -1,0 +1,1 @@
+module.exports.userDatabaseUrl = "mongodb://localhost/pedalada-users-local";

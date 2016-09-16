@@ -6,13 +6,16 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 var FacebookTokenStrategy = require('passport-facebook-token');
 var passport = require('passport');
+var passportConfig = require('./config/passport');
+var db = require('./db/index');
+var dbConfig = require('./config/db');
 
-// dealing with facebook login authentication
-passport.use(new FacebookTokenStrategy({
+db.init(dbConfig.userDatabaseUrl);
 
-}));
+passportConfig(passport);
 
 var routes = require('./src/routes/index');
+var users = require('./src/routes/users');
 
 var app = express();
 
@@ -22,6 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 
 app.use('/', routes);
@@ -41,10 +45,11 @@ app.use(function (req, res, next) {
 if (app.get('env') === 'development') {
 	app.use(function (err, req, res, next) {
 		res.status(err.status || 500);
-		res.render('error', {
-			message: err.message,
-			error: err
-		});
+		res.send();
+		// res.render('error', {
+		// 	message: err.message,
+		// 	error: err
+		// });
 	});
 }
 
@@ -52,10 +57,11 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
-	res.render('error', {
-		message: err.message,
-		error: {}
-	});
+	res.send();
+	// res.render('error', {
+	// 	message: err.message,
+	// 	error: {}
+	// });
 });
 
 
