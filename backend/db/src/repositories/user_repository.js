@@ -7,10 +7,22 @@ var AbstractRepository = require('./abstract_repository');
 
 var Rx = require('rx');
 
+
+class UserConverter {
+	from(obj) {
+		return Rx.Observable.just({
+			facebookId: obj.id,
+			email: obj.emails[0].value,
+			name: obj.displayName,
+			photoURL: obj.photos[0].value
+		})
+	}
+}
+
 class UserRepository {
 
 	constructor() {
-		this.absRep = new AbstractRepository(userModel);
+		this.absRep = new AbstractRepository(userModel, new UserConverter());
 	}
 
 	insert(obj) {

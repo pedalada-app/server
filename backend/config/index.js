@@ -1,1 +1,0 @@
-module.exports.superSecret = "1234567890";

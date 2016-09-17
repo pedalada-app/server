@@ -4,10 +4,33 @@ class AbstractRepository {
 
     constructor(model, converterFactory) {
         this.model = model;
+        this.converterFactory= converterFactory;
     }
 
     insert(obj) {
-        return this.model.create(obj);
+
+        let source = this.converterFactory.from(obj);
+
+        let that = this;
+
+        return source.flatMap(function (obj) {
+            return Rx.Observable.fromPromise(that.model.create(obj));
+        })
+
+    }
+
+    insertMany(docs) {
+        let convertedDocsObs = [];
+        for (let doc of docs) {
+            convertedDocsObs.push(this.converterFactory.from(doc));
+        }
+
+        let that = this;
+
+        return Rx.Observable.zip(convertedDocsObs)
+            .flatMap(function (convertedDocs) {
+                return Rx.Observable.fromPromise(that.model.insertMany(convertedDocs));
+            })
     }
 
     updateDocs(conditions, doc, options) {

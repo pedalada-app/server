@@ -7,14 +7,24 @@ var AbstractRepository = require('./abstract_repository');
 
 var Rx = require('rx');
 
+class FormConverter {
+	from(obj) {
+		return obj;
+	}
+}
+
 class FormRepository {
 
 	constructor() {
-		this.absRep = new AbstractRepository(userModel);
+		this.absRep = new AbstractRepository(userModel, new FormConverter());
 	}
 
 	insert(obj) {
 		return this.absRep.insert(obj);
+	}
+
+	updateStarus(formId, status) {
+		return this.absRep.update({_id : id}, repositoryUtils.setFieldValue({status : status}));
 	}
 
 	getById(id) {
@@ -23,4 +33,4 @@ class FormRepository {
 
 }
 
-module.exports = FromRepository;
+module.exports = FormRepository;

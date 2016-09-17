@@ -4,7 +4,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression');
-var FacebookTokenStrategy = require('passport-facebook-token');
 var passport = require('passport');
 var passportConfig = require('./config/passport');
 var db = require('./db/index');
@@ -14,8 +13,9 @@ db.init(dbConfig.userDatabaseUrl);
 
 passportConfig(passport);
 
-var routes = require('./src/routes/index');
+var authMiddleware = require('./src/routes/auth_middleware');
 var users = require('./src/routes/users');
+var form = require('./src/routes/form');
 
 var app = express();
 
@@ -27,9 +27,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
-
-app.use('/', routes);
+// middleware to verify a token
+app.use('/', authMiddleware);
 app.use('/users', users);
+app.use('/form', form);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -46,10 +47,6 @@ if (app.get('env') === 'development') {
 	app.use(function (err, req, res, next) {
 		res.status(err.status || 500);
 		res.send();
-		// res.render('error', {
-		// 	message: err.message,
-		// 	error: err
-		// });
 	});
 }
 
@@ -58,10 +55,6 @@ if (app.get('env') === 'development') {
 app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.send();
-	// res.render('error', {
-	// 	message: err.message,
-	// 	error: {}
-	// });
 });
 
 

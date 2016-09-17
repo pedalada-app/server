@@ -3,22 +3,18 @@ var passport = require('passport');
 var router = express.Router();
 
 var jwt = require('jsonwebtoken');
-var config = require('../../config/index'); // get our config file
+var config = require('../../config/auth'); // get our config file
 
 /* GET users listing. */
 router.get('/auth/facebook',
 	function (req, res, next) {
 		passport.authenticate('facebook-token', function (err, user, info) {
-
-			console.log("11111111111111111111111111111111");
-
 			if (err) {
 				console.error(err);
 				res.status(401);
 				res.send();
 				return;
 			}
-
 			jwt.sign(user._id, config.superSecret, {}, function (err, token) {
 				if (err) {
 					console.error(err);
@@ -35,7 +31,7 @@ router.get('/auth/facebook',
 			});
 
 		})(req, res, next);
-}
+	}
 );
 
 module.exports = router;
