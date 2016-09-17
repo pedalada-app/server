@@ -87,18 +87,8 @@ class FixtureRepository {
         return repositoryUtils.getById(this, id);
     }
 
-    getByMatchDay(matchday) {
-        return this.absRep.aggregate({$and: [{matchday: matchday}]}, {
-            _id: "$competitionId",
-            "fixtures": {$push: {
-                date: "$date",
-                fixtureId: "$_id",
-                homeTeamName: "$homeTeam.name",
-                awayTeamName: "$awayTeam.name",
-                odds: "$odds",
-                result: "$result"
-            }}
-        }, 'date');
+    getByMatchDay(compId, matchday) {
+        return this.absRep.findAll({$and : [{competitionId : compId}, {matchday: matchday}]}, {}, {sort : 'date'});
     }
 
     idMapping(id) {

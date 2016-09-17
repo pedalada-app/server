@@ -61,8 +61,8 @@ class AbstractRepository {
         return this.model.findOne(query, projection);
     }
 
-    findAll(query, options, projection) {
-        return this.model.find(query, options, projection);
+    findAll(query, projection, options) {
+        return this.model.find(query, projection, options);
     }
 
     aggregate(query, group, sort) {
