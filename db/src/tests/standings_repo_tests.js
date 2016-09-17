@@ -6,7 +6,7 @@ var StandingRepository = require('../main/repositories/standings_repository');
 var FixturesRepository = require('../main/repositories/fixture_repository');
 
 var mongoose = require('mongoose');
-var fixtures = require('../main/models/fixtures');
+var fixtures = require('../main/models/fixture');
 var standing = require('../main/models/standings');
 
 var Rx = require('rx');

@@ -53,4 +53,4 @@ var StandingsSchema = new Schema({
 });
 
 
-module.exports = mongoose.model("Standings", StandingsSchema);
+module.exports = StandingsSchema;

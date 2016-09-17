@@ -1,4 +1,4 @@
-var teamModel = require('../models/teams');
+var modelFactory = require('../models/factory');
 var repositoryUtils = require('./repository_utils');
 
 var AbstractRepository = require('./abstract_repository');
@@ -25,7 +25,7 @@ class TeamConverter {
 class TeamRepository {
 
     constructor() {
-        this.absRep = new AbstractRepository(teamModel, new TeamConverter());
+        this.absRep = new AbstractRepository(modelFactory.teamModel(), new TeamConverter());
     }
 
     insert(obj) {

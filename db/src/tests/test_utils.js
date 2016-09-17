@@ -424,3 +424,43 @@ module.exports.fixtures = [{
     "odds": {"homeWin": 3.25, "draw": 3.25, "awayWin": 2.2}
 }];
 
+var chai = require('chai');
+var expect = chai.expect;
+
+var assertFalse = function () {
+    expect(false).to.be.true;
+};
+
+module.exports.assertFalse = assertFalse;
+
+module.exports.assertComp = function (expected, cb) {
+    return function (actual) {
+        if (actual) {
+
+            if (expected) {
+                expect(actual.name).to.be.equal(expected.caption);
+            }
+            cb()
+        } else {
+            assertFalse();
+        }
+    }
+};
+
+module.exports.assertStanding = function (expected, cb) {
+    return function (actual) {
+        if (actual) {
+            if (expected) {
+                expect(actual[0].position).to.be.equal(expected[0].position);
+            }
+            cb()
+        } else {
+            assertFalse();
+        }
+    }
+};
+
+module.exports. errorHandler = function (error) {
+    console.error(error);
+    assertFalse();
+};

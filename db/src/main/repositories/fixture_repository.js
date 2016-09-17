@@ -1,4 +1,4 @@
-var fixtureModel = require('../models/fixtures');
+var modelFactory = require('../models/factory');
 var CompetitionRepository = require('./competition_repository');
 var TeamRepository = require('./team_repository');
 var repositoryUtils = require('./repository_utils');
@@ -52,7 +52,7 @@ class FixtureRepository {
 
 
     constructor() {
-        this.absRep = new AbstractRepository(fixtureModel, new FixtureConverter());
+        this.absRep = new AbstractRepository(modelFactory.fixtureModel(), new FixtureConverter());
     }
 
     insert(obj) {

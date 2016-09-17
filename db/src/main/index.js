@@ -1,14 +1,37 @@
 var mongoose = require('mongoose');
 
+var factory = require('./models/factory');
+
 module.exports.CompetitionRepository = require('./repositories/competition_repository');
 module.exports.FixtureRepository = require('./repositories/fixture_repository');
 module.exports.StandingRepository = require('./repositories/standings_repository');
 module.exports.TeamRepository = require('./repositories/team_repository');
 
-module.exports.init = function (url) {
-    return mongoose.connect(url)
-        .then(function () {
+var connection;
 
-            return mongoose.connection.db.dropDatabase();
-        })
+module.exports.init = function (url, options) {
+
+    options = options || {};
+
+    connection = mongoose.createConnection(url);
+
+    if (options.drop) {
+        connection.db.dropDatabase();
+    }
+
+    factory.init(connection);
+
 };
+
+module.exports.drop = function () {
+
+    connection.db.dropDatabase();
+
+};
+
+module.exports.close = function () {
+
+    connection.close();
+
+};
+

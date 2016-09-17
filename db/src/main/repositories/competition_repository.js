@@ -1,4 +1,4 @@
-var competitionModel = require('../models/competition');
+var modelFactory = require('../models/factory');
 var repositoryUtils = require('./repository_utils');
 var AbstractRepository = require('./abstract_repository');
 
@@ -25,7 +25,7 @@ class CompetitionConverter {
 class CompetitionRepository {
 
     constructor() {
-        this.absRep = new AbstractRepository(competitionModel, new CompetitionConverter())
+        this.absRep = new AbstractRepository(modelFactory.competitionModel(), new CompetitionConverter())
     }
 
     insert(obj) {

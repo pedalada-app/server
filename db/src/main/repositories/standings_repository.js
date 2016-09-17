@@ -1,4 +1,4 @@
-var standingsModel = require('../models/standings');
+var factoryModel = require('../models/factory');
 var CompetitionRepository = require('./competition_repository');
 var TeamRepository = require('./team_repository');
 var repositoryUtils = require('./repository_utils');
@@ -58,7 +58,7 @@ class StandingsConverter {
 
 class StandingsRepository {
     constructor() {
-        this.absRep = new AbstractRepository(standingsModel, new StandingsConverter());
+        this.absRep = new AbstractRepository(factoryModel.standingsModel(), new StandingsConverter());
     }
 
     insert(obj) {

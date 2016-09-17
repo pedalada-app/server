@@ -91,4 +91,4 @@ var FixtureSchema = new Schema({
 });
 
 
-module.exports = mongoose.model("Fixture", FixtureSchema);
+module.exports = FixtureSchema;

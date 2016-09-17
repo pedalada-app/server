@@ -4,7 +4,7 @@ var TeamRepository = require('../main/repositories/team_repository');
 var StandingRepository = require('../main/repositories/standings_repository');
 var FixturesRepository = require('../main/repositories/fixture_repository');
 var mongoose = require('mongoose');
-var fixtures = require('../main/models/fixtures');
+var fixtures = require('../main/models/fixture');
 var teams = require('../main/models/teams');
 
 
