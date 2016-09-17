@@ -8,20 +8,20 @@ module.exports.exampleUser = {
 module.exports.exampleForm = {
 
     bets : [{
-        fixture : "1",
+        fixture : "507f1f77bcf86cd799439011",
         odd : 5,
         bet : 'x'
     }, {
-        fixture : "2",
+        fixture : "507f1f77bcf86cd799439012",
         odd : 10,
         bet : '2'
     }, {
-        fixture : "3",
+        fixture : "507f1f77bcf86cd799439013",
         odd : 15,
         bet : '1'
     }],
     pedaladas : 100,
-    user : "4",
+    user : "507f1f77bcf86cd799439014",
     name: "good form",
     expectedWinning: 100*5*10*15
 

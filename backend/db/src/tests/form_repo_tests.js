@@ -2,8 +2,10 @@ var chai = require('chai');
 var expect = chai.expect;
 
 var db = require('../../index');
-var modelFactory = require('../../models/factory');
-var repoFactory = require('../../repositories/factory');
+var modelFactory = require('../models/factory');
+var repoFactory = require('../repositories/factory');
+
+var db2 = require('../../../../db/src/main/index');
 
 var Rx = require('rx');
 
@@ -19,6 +21,8 @@ describe('form repository test', function () {
         db.init('mongodb://localhost/pdb-users-test', {
             drop: true
         });
+
+        db2.init("mongodb://localhost/pdb-data-test");
 
         formRepo = repoFactory.formRepo();
 
@@ -44,7 +48,7 @@ describe('form repository test', function () {
             })
             .subscribe(function (actual) {
                 expect(actual.name).to.be.equal(utils.exampleForm.name);
-                expect(actual.bets.length).to.be.equal(utils.bets.length);
+                expect(actual.bets.length).to.be.equal(utils.exampleForm.bets.length);
                 expect(actual.status).to.be.equal('in-progress');
                 done();
             }, utils.errorHandler);
@@ -69,10 +73,12 @@ describe('form repository test', function () {
     it('get by id', function (done) {
         let expected;
         formRepo.insert(utils.exampleForm)
+            .flatMap(function (form) {
                 expected = form;
-                return formRepo.getById(user._id)
+                return formRepo.getById(form._id)
             })
             .subscribe(function (actual) {
+
                 expect(actual.name).to.be.equal(expected.name);
                 expect(actual.date).to.be.equal(expected.date);
                 expect(actual.expectedWinning).to.be.equal(expected.expectedWinning);

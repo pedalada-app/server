@@ -2,8 +2,8 @@ var chai = require('chai');
 var expect = chai.expect;
 
 var db = require('../../index');
-var modelFactory = require('../../models/factory');
-var repoFactory = require('../../repositories/factory');
+var modelFactory = require('../models/factory');
+var repoFactory = require('../repositories/factory');
 
 var Rx = require('rx');
 
@@ -51,17 +51,14 @@ describe('user repository test', function () {
     });
 
     it('add form', function (done) {
-        let id;
+        let expected;
         userRepo.insert(utils.exampleUser)
             .flatMap(function (user) {
-                id = user.id;
-                return userRepo.addFrom(user._id, "1212121212121212121")
+                expected = user;
+                return userRepo.addFrom(user._id, "507f1f77bcf86cd799439011")
             })
-            .subscribe(function (actual) {
-                expect(actual.name).to.be.equal(utils.exampleUser.displayName);
-                expect(actual.facebookId).to.be.equal(utils.exampleUser.id);
-                expect(actual.email).to.be.equal(utils.exampleUser.emails[0].value);
-                expect(actual.forms[0].toString()).to.be.equal("1212121212121212121");
+            .subscribe(function (status) {
+                expect(status.ok).to.be.equal(1);
                 done();
             }, utils.errorHandler);
     });

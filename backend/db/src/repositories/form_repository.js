@@ -5,29 +5,34 @@ var repositoryUtils = require('./repository_utils');
 
 var AbstractRepository = require('./abstract_repository');
 
+var Rx = require('rx');
+
+var dataModelFactory = require('../../../../db/src/main/models/factory');
+
 class FormConverter {
-	from(obj) {
-		return obj;
-	}
+    from(obj) {
+        return Rx.Observable.just(obj);
+    }
 }
 
 class FormRepository {
 
-	constructor() {
-		this.absRep = new AbstractRepository(factory.formModel(), new FormConverter());
-	}
+    constructor() {
+        this.absRep = new AbstractRepository(factory.formModel(), new FormConverter());
+    }
 
-	insert(obj) {
-		return this.absRep.insert(obj);
-	}
+    insert(obj) {
+        return this.absRep.insert(obj);
+    }
 
-	updateStatus(formId, status) {
-		return this.absRep.update({_id : id}, repositoryUtils.setFieldValue({status : status}));
-	}
+    updateStatus(formId, status) {
+        return this.absRep.update({_id: formId}, repositoryUtils.setFieldValue({status: status}));
+    }
 
-	getById(id) {
-		return this.absRep.findOne({_id: id}).populate('bets.fixture');
-	}
+    getById(id) {
+        return this.absRep.findOne({_id: id}).populate({path: 'bets.fixture', model: dataModelFactory.fixtureModel()});
+
+    }
 
 }
 
