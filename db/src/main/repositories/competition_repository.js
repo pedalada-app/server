@@ -65,6 +65,14 @@ class CompetitionRepository {
         return repositoryUtils.getById(this, id);
     }
 
+    getByIds(ids) {
+        return this.absRep.findAll({_id : {$in : ids}})
+    }
+
+    getAll() {
+        return this.absRep.findAll({});
+    }
+
     idMapping(id) {
         return this.absRep.idMapping(id);
     }

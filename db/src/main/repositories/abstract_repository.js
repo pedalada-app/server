@@ -61,8 +61,12 @@ class AbstractRepository {
         return this.model.findOne(query, projection);
     }
 
-    findAll(query, projection) {
-        return this.model.find(query, projection);
+    findAll(query, options, projection) {
+        return this.model.find(query, options, projection);
+    }
+
+    aggregate(query, group, sort) {
+        return this.model.aggregate({$match: query}).group({$_id : group}).sort(sort);
     }
 
     idMapping(id) {

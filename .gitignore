@@ -4,4 +4,5 @@ live/node_modules/
 import/node_modules/
 node_modules
 backend/config/auth.js
+backend/config/db.js
 .idea

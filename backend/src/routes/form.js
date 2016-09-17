@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var utils = require('./router_utils');
 
 var config = require('../../config/auth'); // get our config file
 
@@ -70,11 +71,7 @@ router.get(function (req, res, next) {
 			res.status(200);
 			res.json(returnForms);
 		})
-		.catch(function (err) {
-			console.error(err);
-			res.status(500);
-			res.json({msg: "internal error", error: err})
-		})
+		.catch(utils.errorHandler(res))
 });
 
 // get form
@@ -85,9 +82,5 @@ router.get('/:formId', function (req, res, next) {
 			res.status(200);
 			res.json(generateReturnForm(form));
 		})
-		.catch(function (err) {
-			console.error(err);
-			res.status(500);
-			res.json({msg: "internal error", error: err})
-		})
+		.catch(utils.errorHandler(res))
 });

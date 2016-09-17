@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
+var utils = require('./router_utils');
 
 var jwt = require('jsonwebtoken');
 var config = require('../../config/auth'); // get our config file
@@ -63,11 +64,7 @@ router.get('/info', function (req, res) {
 			res.status(200);
 			res.json(data);
 		})
-		.catch(function (err) {
-			console.error(err);
-			res.status(500);
-			res.json({msg: "internal error", error: err})
-		})
+		.catch(utils.errorHandler(res))
 });
 
 
