@@ -3,10 +3,12 @@ var router = express.Router();
 
 var config = require('../../config/auth'); // get our config file
 
-var FormRepository = require('../../db/src/repositories/form_repository');
-var UserRepository = require('../../db/src/repositories/user_repository');
-var formRepo = new FormRepository();
-var userRepo = new UserRepository();
+var factory = require('../../db/src/repositories/factory');
+var formRepo = factory.formRepo();
+var userRepo = factory.userRepo();
+
+
+var db = require('../../db/index');
 
 // check if pass authentication
 router.use(function (req, res, next) {

@@ -1,6 +1,6 @@
 'use strict';
 
-var userModel = require('../models/users');
+var factory = require('../models/factory');
 var repositoryUtils = require('./repository_utils');
 
 var AbstractRepository = require('./abstract_repository');
@@ -22,7 +22,7 @@ class UserConverter {
 class UserRepository {
 
 	constructor() {
-		this.absRep = new AbstractRepository(userModel, new UserConverter());
+		this.absRep = new AbstractRepository(factory.userModel(), new UserConverter());
 	}
 
 	insert(obj) {

@@ -5,9 +5,8 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 var config = require('../../config/auth'); // get our config file
 
-var UserRepository = require('../../db/src/repositories/user_repository');
-
-var userRepo = new UserRepository();
+var factory = require('../../db/src/repositories/factory');
+var userRepo = factory.userRepo();
 
 /* GET users listing. */
 router.get('/auth/facebook',

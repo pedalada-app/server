@@ -1,20 +1,15 @@
 var chai = require('chai');
 var expect = chai.expect;
 
-var TeamRepository = require('../main/repositories/team_repository');
-var mongoose = require('mongoose');
-
-
 var db = require('../main/index');
-var factory = require('../main/models/factory');
+var modelFactory = require('../main/models/factory');
+var repoFactory = require('../main/repositories/factory');
 
 var Rx = require('rx');
 
 var utils = require('./test_utils');
 
-
 var teamRepo;
-
 var fixturesModel, teamModel;
 
 
@@ -26,10 +21,10 @@ describe('team repository tests', function () {
             drop: true
         });
 
-        teamRepo = new TeamRepository();
+        teamRepo = repoFactory.teamRepo();
 
-        fixturesModel = factory.fixtureModel();
-        teamModel = factory.teamModel();
+        fixturesModel = modelFactory.fixtureModel();
+        teamModel = modelFactory.teamModel();
 
         done();
     });

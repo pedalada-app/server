@@ -1,17 +1,14 @@
-var CompetitionRepository = require('../main/repositories/competition_repository');
-var TeamRepository = require('../main/repositories/team_repository');
-var StandingRepository = require('../main/repositories/standings_repository');
-var mongoose = require('mongoose');
 
 var db = require('../main/index');
-var factory = require('../main/models/factory');
+var modelFactory = require('../main/models/factory');
+var repoFactory = require('../main/repositories/factory');
+
 var Rx = require('rx');
 
 var utils = require('./test_utils');
 
 var chai = require('chai');
 var expect = chai.expect;
-
 
 var compRepo, teamRepo, standRepo;
 var competitionModel;
@@ -24,12 +21,11 @@ describe('Compatition Repository test', function () {
             drop: true
         });
 
+        compRepo = repoFactory.competitionRepo();
+        teamRepo = repoFactory.teamRepo();
+        standRepo = repoFactory.standingsRepo();
 
-        compRepo = new CompetitionRepository();
-        teamRepo = new TeamRepository();
-        standRepo = new StandingRepository();
-
-        competitionModel = factory.competitionModel();
+        competitionModel = modelFactory.competitionModel();
 
         done();
 
