@@ -53,12 +53,15 @@ router.get('/fixtures', function (req, res, next) {
                     .map(function (fixtures) {
                         return {
                             competitionId: comp._id,
+                            currentMatchday: comp.currentMatchday,
                             fixtures: fixtures
                         };
                     })
             })
-            .map(function (obj) {
-
+            .toArray()
+            .subscribe(function (arr) {
+                res.status(200);
+                res.json(arr);
             })
 
     } else {
