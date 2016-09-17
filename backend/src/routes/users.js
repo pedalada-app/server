@@ -5,6 +5,10 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 var config = require('../../config/auth'); // get our config file
 
+var UserRepository = require('../../db/src/repositories/user_repository');
+
+var userRepo = new UserRepository();
+
 /* GET users listing. */
 router.get('/auth/facebook',
 	function (req, res, next) {
@@ -33,5 +37,39 @@ router.get('/auth/facebook',
 		})(req, res, next);
 	}
 );
+
+// check if pass authentication
+router.use(function (req, res, next) {
+	if (req.authenticate.error) {
+		console.error(req.authenticate.error);
+		res.status(401);
+		res.json({msg: "authentication failed", error: req.authenticate.error})
+	} else {
+		res.userId = res.authenticate.decoded;
+		next();
+	}
+});
+
+// get user info
+router.get('/info', function (req, res) {
+	userRepo.getById(req.userId)
+		.then(function (user) {
+			let data = {
+				name: user.name,
+				stats: {}
+			};
+
+			// add some statistics to data.stats
+
+			res.status(200);
+			res.json(data);
+		})
+		.catch(function (err) {
+			console.error(err);
+			res.status(500);
+			res.json({msg: "internal error", error: err})
+		})
+});
+
 
 module.exports = router;

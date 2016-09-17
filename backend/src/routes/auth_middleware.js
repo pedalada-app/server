@@ -11,7 +11,7 @@ router.use(function (req, res, next) {
 	if (token) {
 		jwt.verify(token, authConfig.superSecret, function (err, decoded) {
 			req.athonticate = {
-				err: err,
+				error: err,
 				decoded: decoded
 			};
 			next();

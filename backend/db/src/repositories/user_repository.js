@@ -38,7 +38,7 @@ class UserRepository {
 	}
 
 	getById(id) {
-		return repositoryUtils.getById(this, id);
+		return this.absRep.findOne({_id: id}).populate('forms');
 	}
 
 }

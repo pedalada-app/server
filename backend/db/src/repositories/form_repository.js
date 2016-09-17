@@ -28,7 +28,7 @@ class FormRepository {
 	}
 
 	getById(id) {
-		return repositoryUtils.getById(this, id);
+		return this.absRep.findOne({_id: id}).populate('bets.fixture');
 	}
 
 }

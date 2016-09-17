@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var formSchema = new Schema({
 
 	bets: [{
-		fixtureId: {
+		fixture: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Fixture",
 			required: true
@@ -47,6 +47,11 @@ var formSchema = new Schema({
 	},
 
 	name: {
+		type: String,
+		required: true
+	},
+
+	expectedWinning: {
 		type: String,
 		required: true
 	}
