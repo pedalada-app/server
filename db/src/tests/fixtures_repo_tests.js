@@ -250,42 +250,24 @@ describe('Fixtures Repository test', function () {
     });
 
     it('getByMatchDay', function (done) {
-        let comp, team1, team2, expected;
+        let comp, teams;
 
-        fixtRepo.getByMatchDay( 1).then(function (hello) {
-            console.log(JSON.stringify(hello));
-            done();
-        }).catch(function (e) {
-            console.log(e);
-            done(false);
-        })
-        //
-        // try {
-        //     Rx.Observable.zip(compRepo.insertMany([utils.competitions[0], utils.competitions[1]]),
-        //         teamRepo.insertMany(utils.pmTeams),
-        //         teamRepo.insertMany(utils.championshipTeam))
-        //         .flatMap(function (arr) {
-        //             comps = arr[0];
-        //             team1 = arr[1];
-        //             team2 = arr[2];
-        //
-        //
-        //             console.log("HHH");
-        //
-        //             return fixtRepo.insertMany(utils.championshipGames.concat(utils.premierLeagueFixtures))
-        //         })
-        //         .flatMap(function (fixt) {
-        //             expected = fixt;
-        //             return fixtRepo.getByMatchDay([426, 427], 1);
-        //         })
-        //         .subscribe(function (obj) {
-        //             console.log(obj);
-        //             done();
-        //         }, utils.errorHandler)
-        // } catch (e) {
-        //     console.error(e);
-        //     utils.errorHandler(e);
-        // }
+        Rx.Observable.zip(compRepo.insert(utils.competitions[0]),
+            teamRepo.insertMany(utils.pmTeams))
+            .flatMap(function (arr) {
+
+                comp = arr[0];
+                teams = arr[1];
+                console.log("HHH");
+                return fixtRepo.insertMany(utils.premierLeagueFixtures)
+            })
+            .flatMap(function (fixts) {
+                return fixtRepo.getByMatchDay(comp._id, 1);
+            })
+            .subscribe(function (obj) {
+                console.log(obj);
+                done();
+            }, utils.errorHandler)
     })
 
 });

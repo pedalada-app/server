@@ -74,7 +74,7 @@ class AbstractRepository {
             .where("api_detail.id").equals(id)
             .lean()
             .then(function (obj) {
-                return Promise.resolve(obj._id);
+                return Promise.resolve(obj ._id);
         });
     }
 
