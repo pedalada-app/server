@@ -8,18 +8,24 @@ let FixtureRepository = require(config.dbLib).FixtureRepository;
 let CompRepository = require(config.dbLib).CompetitionRepository;
 let TeamRepository = require(config.dbLib).TeamRepository;
 
-let fixturesRepo = new FixtureRepository();
-let compRepo = new CompRepository();
-let teamRepo = new TeamRepository();
+let fixturesRepo;
+let compRepo;
+let teamRepo;
 
 
 class CompetitionFixturesJob {
+
+    static init() {
+        fixturesRepo = new FixtureRepository();
+        compRepo = new CompRepository();
+        teamRepo = new TeamRepository();
+    }
 
     constructor(competition) {
         this.competition = competition;
     }
 
-    start(queue) {
+    start() {
 
         let self = this;
 

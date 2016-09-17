@@ -6,6 +6,10 @@ let CompetitionJob = require('./competition_job');
 
 class MainJob {
 
+    static init() {
+        CompetitionJob.init();
+    }
+
     start(queue) {
 
         console.log("Main job");
@@ -18,7 +22,7 @@ class MainJob {
                 for (let competition of competitions) {
                     let compJob = new CompetitionJob(competition);
 
-                    if (competition.id !== 426) {
+                    if (competition.id !== 439) {
                         continue;
                     }
 

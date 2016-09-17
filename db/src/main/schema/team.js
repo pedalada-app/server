@@ -19,8 +19,7 @@ var TeamSchema = new Schema({
 	},
 
 	shortName: {
-		type: String,
-        required: true
+		type: String
 	},
 
 	squadMarketValue: {

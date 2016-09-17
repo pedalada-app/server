@@ -7,13 +7,21 @@ let Rx = require('rx');
 let CompRepository = require(config.dbLib).CompetitionRepository;
 let TeamRepository = require(config.dbLib).TeamRepository;
 
-let compRepo = new CompRepository();
-let teamRepo = new TeamRepository();
+let compRepo;
+let teamRepo;
 
 let CompetitionStandingJob = require('./competition_standings_job');
 let CompetitionFixturesJob = require('./competition_fixtures_job');
 
 class CompetitionJob {
+
+    static init() {
+        compRepo = new CompRepository();
+        teamRepo = new TeamRepository();
+
+        CompetitionStandingJob.init();
+        CompetitionFixturesJob.init();
+    }
 
     constructor(comp) {
         this.comp = comp;
@@ -54,8 +62,8 @@ class CompetitionJob {
                 let compStandingJob = new CompetitionStandingJob(self.savedComp);
                 self.queue.addJob(compStandingJob);
 
-                // let compFixturesJob = new CompetitionFixturesJob(self.savedComp);
-                // self.queue.addJob(compFixturesJob);
+                let compFixturesJob = new CompetitionFixturesJob(self.savedComp);
+                self.queue.addJob(compFixturesJob);
 
             }, function (err) {
                 console.error(err);

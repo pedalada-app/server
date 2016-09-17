@@ -22,22 +22,24 @@ class StandingsConverter {
                 .map(function (team) {
                     return team.teamId;
                 })
-                .flatMap(function (teamId) {
-                    return Rx.Observable.fromPromise(self.teamRepo.idMapping(teamId));
+                .concatMap(function (teamId) {
+                    return self.teamRepo.getByApiId(teamId);
                 })
                 .reduce(function (acc, val) {
                     acc.push(val);
                     return acc;
                 }, []),
-            function (compId, standingTeamIds) {
+            function (compId, teams) {
 
                 let standing = [];
-                for (let i = 0; i < standingTeamIds.length; i++) {
+                for (let i = 0; i < teams.length; i++) {
                     let team = obj.standing[i];
 
+                    let teamData = teams[i];
+
                     standing[i] = {
-                        teamId: standingTeamIds[i],
-                        name: team.team,
+                        teamId: teamData._id,
+                        name: teamData.shortName || teamData.name,
                         playedGames: team.playedGames,
                         points: team.points,
                         goals: team.goals,

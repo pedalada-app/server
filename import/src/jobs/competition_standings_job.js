@@ -8,10 +8,15 @@ let Rx = require('rx');
 let StandingRepository = require(config.dbLib).StandingRepository;
 let CompetitionRepository = require(config.dbLib).CompetitionRepository;
 
-let standingRepo = new StandingRepository();
-let compRepo = new CompetitionRepository();
+let standingRepo;
+let compRepo;
 
 class CompetitionStandingsJob {
+
+    static init() {
+        standingRepo = new StandingRepository();
+        compRepo = new CompetitionRepository();
+    }
 
     constructor(competition, matchday) {
         this.competition = competition;
@@ -26,7 +31,7 @@ class CompetitionStandingsJob {
             return;
         }
 
-        console.log("CompetitionStandingsJob comp=[" + self.competition.name + "], matchday = [" + self.matchday + "]")
+        console.log("CompetitionStandingsJob comp=[" + self.competition.name + "], matchday = [" + self.matchday + "]");
 
         Rx.Observable.fromPromise(Client.getCompetitionById(this.competition.api_detail.id).getTable(this.matchday))
             .map(function (res) {
@@ -35,6 +40,7 @@ class CompetitionStandingsJob {
             .flatMap(function (standings) {
 
                 standings.competitionId = self.competition.api_detail.id;
+
                 return standingRepo.insert(standings);
             })
             .subscribe(function (standing) {

@@ -15,8 +15,6 @@ class Factory {
         this._fixtureModel = connection.model('Fixture', fixtureSchema);
         this._standingsModel = connection.model('Standings', standingsSchema);
         this._teamsModel = connection.model('Team', teamSchema);
-
-
     }
 
     competitionModel() {
