@@ -1,55 +1,50 @@
 var chai = require('chai');
+var expect = chai.expect;
 
 var CompetitionRepository = require('../main/repositories/competition_repository');
 var TeamRepository = require('../main/repositories/team_repository');
 var StandingRepository = require('../main/repositories/standings_repository');
-var FixturesRepository = require('../main/repositories/fixture_repository');
 
 var mongoose = require('mongoose');
-var fixtures = require('../main/models/fixture');
-var standing = require('../main/models/standings');
 
 var Rx = require('rx');
 
-var utils = require('./test_utils')
+var utils = require('./test_utils');
 
-var expect = chai.expect;
+var db = require('../main/index');
+var factory = require('../main/models/factory');
 
-var compRepo = new CompetitionRepository();
-var teamRepo = new TeamRepository();
-var standRepo = new StandingRepository();
-var fixtRepo = new FixturesRepository();
+var compRepo, teamRepo, standRepo;
 
-var assertFalse = function () {
-    expect(false).to.be.true;
-};
-
-var errorHandler = function (error) {
-    console.error(error);
-    assertFalse();
-};
+var fixtureModel, standingModel;
 
 describe('standing repository tests', function () {
 
     before(function (done) {
-        if (mongoose.connection.db) {
-            done();
-        }
-        mongoose.connect('mongodb://localhost/pedaladaDb-test', done);
+
+        db.init('mongodb://localhost/pdb-test', {
+            drop: true
+        });
+
+        compRepo = new CompetitionRepository();
+        teamRepo = new TeamRepository();
+        standRepo = new StandingRepository();
+
+        fixtureModel = factory.fixtureModel();
+        standingModel = factory.standingsModel();
+
+        done();
+
     });
 
     afterEach(function (done) {
-        if (mongoose.connection.db) {
-            mongoose.connection.db.dropDatabase();
-            done();
-        }
+        db.drop();
+        done();
     });
 
     after(function (done) {
-        if (mongoose.connection.db) {
-            mongoose.connection.close();
-            done();
-        }
+        db.close();
+        done();
     });
 
     it('insert', function (done) {
@@ -67,7 +62,7 @@ describe('standing repository tests', function () {
                 expect(stand.matchday).to.be.equal(utils.standing.matchday);
                 expect(stand.standing[0].name).to.be.equal('ManCity');
                 done();
-            }, errorHandler)
+            }, utils.errorHandler)
     });
 
     it('remove standing', function (done) {
@@ -86,12 +81,12 @@ describe('standing repository tests', function () {
             .flatMap(function (status) {
                 expect(status.result.ok).to.be.equal(1);
                 expect(status.result.n).to.be.equal(1);
-                return Rx.Observable.fromPromise(standing.findOne({_id: id}));
+                return Rx.Observable.fromPromise(standingModel.findOne({_id: id}));
             })
             .subscribe(function (obj) {
                 expect(obj).to.be.null;
                 done();
-            }, errorHandler)
+            }, utils.errorHandler)
     });
 
     it('get by id', function (done) {
@@ -114,7 +109,7 @@ describe('standing repository tests', function () {
                 expect(expected.standing[1].teamId.toString()).to.be.deep.equal(actual.standing[1].teamId.toString());
                 expect(expected.standing[2].teamId.toString()).to.be.deep.equal(actual.standing[2].teamId.toString());
                 done();
-            }, errorHandler)
+            }, utils.errorHandler)
     });
 
 });

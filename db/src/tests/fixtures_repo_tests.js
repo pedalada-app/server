@@ -6,49 +6,48 @@ var StandingRepository = require('../main/repositories/standings_repository');
 var FixturesRepository = require('../main/repositories/fixture_repository');
 
 var mongoose = require('mongoose');
-var fixtures = require('../main/models/fixture');
 
 var Rx = require('rx');
+
+
+var db = require('../main/index');
+var factory = require('../main/models/factory');
+
 
 var utils = require('./test_utils');
 
 var expect = chai.expect;
 
-var compRepo = new CompetitionRepository();
-var teamRepo = new TeamRepository();
-var standRepo = new StandingRepository();
-var fixtRepo = new FixturesRepository();
+var compRepo, teamRepo, standRepo, fixtRepo;
+var fixturesModel;
 
-var assertFalse = function () {
-    expect(false).to.be.true;
-};
-
-var errorHandler = function (error) {
-    console.error(error);
-    assertFalse();
-};
 
 describe('Fixtures Repository test', function () {
 
     before(function (done) {
-        if (mongoose.connection.db) {
-            done();
-        }
-        mongoose.connect('mongodb://localhost/pedaladaDb-test', done);
+
+        db.init('mongodb://localhost/pdb-test', {
+            drop: true
+        });
+
+        compRepo = new CompetitionRepository();
+        teamRepo = new TeamRepository();
+        standRepo = new StandingRepository();
+        fixtRepo = new FixturesRepository();
+
+        fixturesModel = factory.fixtureModel();
+
+        done();
     });
 
     afterEach(function (done) {
-        if (mongoose.connection.db) {
-            mongoose.connection.db.dropDatabase();
-            done();
-        }
+        db.drop();
+        done();
     });
 
     after(function (done) {
-        if (mongoose.connection.db) {
-            mongoose.connection.close();
-            done();
-        }
+        db.close();
+        done();
     });
 
     it('insert', function (done) {
@@ -70,7 +69,7 @@ describe('Fixtures Repository test', function () {
                 expect(fixt.awayTeam.id.toString()).to.be.equal(team2._id.toString());
                 expect(fixt.awayTeam.name).to.be.equal(team2.name);
                 done();
-            }, errorHandler)
+            }, utils.errorHandler)
     });
 
     it('update results', function (done) {
@@ -86,18 +85,18 @@ describe('Fixtures Repository test', function () {
             })
             .flatMap(function (fixt) {
                 id = fixt._id;
-                return fixtRepo.updateResult(fixt._id, {goalsHomeTeam : 10, goalsAwayTeam : 0});
+                return fixtRepo.updateResult(fixt._id, {goalsHomeTeam: 10, goalsAwayTeam: 0});
             })
             .flatMap(function (status) {
                 expect(status.ok).to.be.equal(1);
                 expect(status.n).to.be.equal(1);
-                return Rx.Observable.fromPromise(fixtures.findOne({_id: id}));
+                return Rx.Observable.fromPromise(fixturesModel.findOne({_id: id}));
             })
             .subscribe(function (fixt) {
                 expect(fixt.result.goalsHomeTeam).to.be.equal(10);
                 expect(fixt.result.goalsAwayTeam).to.be.equal(0);
                 done();
-            }, errorHandler);
+            }, utils.errorHandler);
     });
 
     it('update status', function (done) {
@@ -118,12 +117,12 @@ describe('Fixtures Repository test', function () {
             .flatMap(function (status) {
                 expect(status.ok).to.be.equal(1);
                 expect(status.n).to.be.equal(1);
-                return Rx.Observable.fromPromise(fixtures.findOne({_id: id}));
+                return Rx.Observable.fromPromise(fixturesModel.findOne({_id: id}));
             })
             .subscribe(function (fixt) {
                 expect(fixt.status).to.be.equal('TIMED');
                 done();
-            }, errorHandler);
+            }, utils.errorHandler);
     });
 
     it('update date', function (done) {
@@ -146,17 +145,17 @@ describe('Fixtures Repository test', function () {
             .flatMap(function (status) {
                 expect(status.ok).to.be.equal(1);
                 expect(status.n).to.be.equal(1);
-                return Rx.Observable.fromPromise(fixtures.findOne({_id: id}));
+                return Rx.Observable.fromPromise(fixturesModel.findOne({_id: id}));
             })
             .subscribe(function (fixt) {
                 expect(fixt.date.toString()).to.be.equal(date.toString());
                 done();
-            }, errorHandler);
+            }, utils.errorHandler);
     });
 
     it('update odds', function (done) {
         let comp, team1, team2, id;
-        let odds = {homeWin : 0.5, awayWin : 0.5, draw : 0.5};
+        let odds = {homeWin: 0.5, awayWin: 0.5, draw: 0.5};
 
         Rx.Observable.zip(compRepo.insert(utils.competitions[0]),
             teamRepo.insert(utils.teams[0]),
@@ -174,14 +173,14 @@ describe('Fixtures Repository test', function () {
             .flatMap(function (status) {
                 expect(status.ok).to.be.equal(1);
                 expect(status.n).to.be.equal(1);
-                return Rx.Observable.fromPromise(fixtures.findOne({_id: id}));
+                return Rx.Observable.fromPromise(fixturesModel.findOne({_id: id}));
             })
             .subscribe(function (fixt) {
                 expect(fixt.odds.homeWin).to.be.equal(odds.homeWin);
                 expect(fixt.odds.awayWin).to.be.equal(odds.awayWin);
                 expect(fixt.odds.draw).to.be.equal(odds.draw);
                 done();
-            }, errorHandler);
+            }, utils.errorHandler);
     });
 
     it('get by api id', function (done) {
@@ -207,7 +206,7 @@ describe('Fixtures Repository test', function () {
                 expect(expected.awayTeam.id.toString()).to.be.equal(actual.awayTeam.id.toString());
                 expect(expected.awayTeam.name).to.be.equal(actual.awayTeam.name);
                 done();
-            }, errorHandler)
+            }, utils.errorHandler)
     });
 
     it('get by id', function (done) {
@@ -233,7 +232,7 @@ describe('Fixtures Repository test', function () {
                 expect(expected.awayTeam.id.toString()).to.be.equal(actual.awayTeam.id.toString());
                 expect(expected.awayTeam.name).to.be.equal(actual.awayTeam.name);
                 done();
-            }, errorHandler)
+            }, utils.errorHandler)
     });
 
     it('id mapping', function (done) {
@@ -254,7 +253,7 @@ describe('Fixtures Repository test', function () {
             .subscribe(function (actual) {
                 expect(expected).to.be.equal(actual.toString());
                 done();
-            }, errorHandler)
+            }, utils.errorHandler)
     });
 
 });
