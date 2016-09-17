@@ -40,34 +40,27 @@ router.get(function (req, res, next) {
 });
 
 // get all current matchday fixtures of given competitions
-router.get('/fixtures', function (req, res, next) {
-    let comps = req.query.compIds;
-    if (comps) {
-        let compIds = comps.split(',');
-        Rx.Observable.from(compIds)
-            .flatMap(function (compId) {
-                return compRepo.getById(compId)
-            })
-            .flatMap(function (comp) {
-                return fixtRepo.getByMatchDay(comp._id, comp.currentMatchday)
-                    .map(function (fixtures) {
-                        return {
-                            competitionId: comp._id,
-                            currentMatchday: comp.currentMatchday,
-                            fixtures: fixtures
-                        };
-                    })
-            })
-            .toArray()
-            .subscribe(function (arr) {
-                res.status(200);
-                res.json(arr);
-            })
+router.get('/fixtures/latest', function (req, res, next) {
 
-    } else {
-        console.error("competitions ID's doesn't sent");
-        res.status(400);
-        res.json({msg: "competitions ID's doesn't sent"})
-    }
+    compRepo.getAll()
+        .flatMap(function (comps) {
+            return Rx.Observable.from(comps)
+        })
+        .flatMap(function (comp) {
+            return fixtRepo.getByMatchDay(comp._id, comp.currentMatchday)
+                .map(function (fixtures) {
+                    return {
+                        competitionId: comp._id,
+                        currentMatchday: comp.currentMatchday,
+                        fixtures: fixtures
+                    };
+                })
+        })
+        .toArray()
+        .subscribe(function (arr) {
+            res.status(200);
+            res.json(arr);
+        })
+
 
 });

@@ -1,8 +1,9 @@
 var FacebookStrategy = require('passport-facebook-token');
-var UserRepository = require('../db/index').userRepository;
+var repositoryFactory = require('../db/src/repositories/factory').userRepository;
+
 var configAuth = require('./auth');
 
-var userRepo = new UserRepository();
+var userRepo = repositoryFactory.userRepo();
 
 module.exports = function (passport) {
 	passport.use(new FacebookStrategy({

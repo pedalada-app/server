@@ -21,7 +21,7 @@ class FormRepository {
 		return this.absRep.insert(obj);
 	}
 
-	updateStarus(formId, status) {
+	updateStatus(formId, status) {
 		return this.absRep.update({_id : id}, repositoryUtils.setFieldValue({status : status}));
 	}
 
