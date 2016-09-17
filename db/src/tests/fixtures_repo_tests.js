@@ -20,7 +20,7 @@ describe('Fixtures Repository test', function () {
     before(function (done) {
 
         db.init('mongodb://localhost/pdb-test', {
-            drop: true
+            // drop: true
         });
 
         compRepo = repoFactory.competitionRepo();
@@ -34,12 +34,12 @@ describe('Fixtures Repository test', function () {
     });
 
     afterEach(function (done) {
-        db.drop();
+        // db.drop();
         done();
     });
 
     after(function (done) {
-        db.close();
+        // db.close();
         done();
     });
 
@@ -249,25 +249,43 @@ describe('Fixtures Repository test', function () {
             }, utils.errorHandler)
     });
 
-    it('aggregate', function (done) {
+    it('getByMatchDay', function (done) {
         let comp, team1, team2, expected;
-        Rx.Observable.zip(compRepo.insertMany([utils.competitions[0], utils.competitions[1]]),
-            teamRepo.insertMany(utils.pmTeams),
-            teamRepo.insertMany(utils.championshipTeam))
-            .flatMap(function (arr) {
-                comps = arr[0];
-                team1 = arr[1];
-                team2 = arr[2];
-                return fixtRepo.insertMany(utils.championshipGames.concat(utils.premierLeagueFixtures))
-            })
-            .flatMap(function (fixt) {
-                expected = fixt;
-                return fixtRepo.getByMatchDay([426, 427], 1);
-            })
-            .subscribe(function (obj) {
-                console.log(obj);
-                done();
-            }, utils.errorHandler)
+
+        fixtRepo.getByMatchDay( 1).then(function (hello) {
+            console.log(JSON.stringify(hello));
+            done();
+        }).catch(function (e) {
+            console.log(e);
+            done(false);
+        })
+        //
+        // try {
+        //     Rx.Observable.zip(compRepo.insertMany([utils.competitions[0], utils.competitions[1]]),
+        //         teamRepo.insertMany(utils.pmTeams),
+        //         teamRepo.insertMany(utils.championshipTeam))
+        //         .flatMap(function (arr) {
+        //             comps = arr[0];
+        //             team1 = arr[1];
+        //             team2 = arr[2];
+        //
+        //
+        //             console.log("HHH");
+        //
+        //             return fixtRepo.insertMany(utils.championshipGames.concat(utils.premierLeagueFixtures))
+        //         })
+        //         .flatMap(function (fixt) {
+        //             expected = fixt;
+        //             return fixtRepo.getByMatchDay([426, 427], 1);
+        //         })
+        //         .subscribe(function (obj) {
+        //             console.log(obj);
+        //             done();
+        //         }, utils.errorHandler)
+        // } catch (e) {
+        //     console.error(e);
+        //     utils.errorHandler(e);
+        // }
     })
 
 });

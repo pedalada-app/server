@@ -64,19 +64,19 @@ class FixtureRepository {
     }
 
     updateResult(fixtureId, result) {
-        return this.absRep.update({_id : fixtureId}, repositoryUtils.setFieldValue({result : result}));
+        return this.absRep.update({_id: fixtureId}, repositoryUtils.setFieldValue({result: result}));
     }
 
     updateStatus(fixtureId, status) {
-        return this.absRep.update({_id : fixtureId}, repositoryUtils.setFieldValue({status : status}));
+        return this.absRep.update({_id: fixtureId}, repositoryUtils.setFieldValue({status: status}));
     }
 
     updateDate(fixtureId, date) {
-        return this.absRep.update({_id : fixtureId}, repositoryUtils.setFieldValue({date : date}));
+        return this.absRep.update({_id: fixtureId}, repositoryUtils.setFieldValue({date: date}));
     }
 
     updateOdds(fixtureId, odds) {
-        return this.absRep.update({_id : fixtureId}, repositoryUtils.setFieldValue({odds : odds}));
+        return this.absRep.update({_id: fixtureId}, repositoryUtils.setFieldValue({odds: odds}));
     }
 
     getByApiId(apiId) {
@@ -87,8 +87,18 @@ class FixtureRepository {
         return repositoryUtils.getById(this, id);
     }
 
-    getByMatchDay(compIds, matchday) {
-        return this.absRep.aggregate({$and : {competitionId: {$in : compIds}, matchday:matchday}}, '$competitonId', 'date');
+    getByMatchDay(matchday) {
+        return this.absRep.aggregate({$and: [{matchday: matchday}]}, {
+            _id: "$competitionId",
+            "fixtures": {$push: {
+                date: "$date",
+                fixtureId: "$_id",
+                homeTeamName: "$homeTeam.name",
+                awayTeamName: "$awayTeam.name",
+                odds: "$odds",
+                result: "$result"
+            }}
+        }, 'date');
     }
 
     idMapping(id) {

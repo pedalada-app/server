@@ -66,7 +66,7 @@ class AbstractRepository {
     }
 
     aggregate(query, group, sort) {
-        return this.model.aggregate({$match: query}).group({$_id : group}).sort(sort);
+        return this.model.aggregate({$match: query}).group(group).sort(sort);
     }
 
     idMapping(id) {
