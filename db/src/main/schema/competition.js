@@ -51,7 +51,11 @@ var CompetitionSchema = new Schema({
 	teams: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Teams"
-	}]
+	}],
+
+	competitionLogoUrl : {
+		type : String
+	}
 
 });
 

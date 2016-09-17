@@ -38,19 +38,23 @@ class CompetitionRepository {
 
     updateStanding(compId, standingId) {
 
-        return this.absRep.update({_id : compId}, repositoryUtils.setFieldValue({lastStanding : standingId}));
+        return this.absRep.update({_id: compId}, repositoryUtils.setFieldValue({lastStanding: standingId}));
     }
 
     updateMatchDay(compId, matchDay) {
-        return this.absRep.update({_id : compId}, repositoryUtils.setFieldValue({currentMatchday: matchDay}));
+        return this.absRep.update({_id: compId}, repositoryUtils.setFieldValue({currentMatchday: matchDay}));
     }
 
     addFixtures(compId, fixturesIds) {
-        return this.absRep.update({_id : compId}, {$push : {fixtures : {$each : fixturesIds}}});
+        return this.absRep.update({_id: compId}, {$push: {fixtures: {$each: fixturesIds}}});
     }
 
     addTeams(compId, teamsIds) {
-        return this.absRep.update({_id : compId}, {$push : {teams : {$each : teamsIds}}});
+        return this.absRep.update({_id: compId}, {$push: {teams: {$each: teamsIds}}});
+    }
+
+    addLogo(compId, logoUrl) {
+        return this.absRep.update({_id: compId}, repositoryUtils.setFieldValue({competitionLogoUrl: logoUrl}));
     }
 
     getByApiId(apiId) {
