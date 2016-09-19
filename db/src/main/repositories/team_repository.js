@@ -1,3 +1,5 @@
+'use strict';
+
 var modelFactory = require('../models/factory');
 var repositoryUtils = require('./repository_utils');
 

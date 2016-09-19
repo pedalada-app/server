@@ -1,9 +1,8 @@
 var FacebookStrategy = require('passport-facebook-token');
-var repositoryFactory = require('../db/src/repositories/factory').userRepository;
+var repositoryFactory = require('../db/src/repositories/factory');
 
 var configAuth = require('./auth');
 
-var userRepo = repositoryFactory.userRepo();
 
 module.exports = function (passport) {
 	passport.use(new FacebookStrategy({
@@ -11,12 +10,12 @@ module.exports = function (passport) {
 		clientSecret: configAuth.facebookAuth.clientSecret
 	}, function (token, refreshToken, profile, done) {
 		var userEmail = profile.emails[0].value;
-		userRepo.getByMail(userEmail)
+		repositoryFactory.userRepo().getByMail(userEmail)
 			.then(function (user) {
 				if (user) { // user already exists
 					done(null, user);
 				} else { // no exist.
-					userRepo.insert(profile)
+					repositoryFactory.userRepo().insert(profile)
 						.then(function (obj) {
 							done(null, obj)
 						})

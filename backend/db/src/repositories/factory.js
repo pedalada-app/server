@@ -1,3 +1,4 @@
+'use strict';
 
 var FormRepository = require('./form_repository');
 var UserRepository = require('./user_repository');

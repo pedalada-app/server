@@ -1,3 +1,5 @@
+'use strict';
+
 var Rx = require('rx');
 
 module.exports.getByApiId = function (rep, apiId) {

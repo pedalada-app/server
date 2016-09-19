@@ -1,3 +1,5 @@
+'use strict';
+
 var formSchema = require('../schema/form');
 var usersSchema = require('../schema/user');
 

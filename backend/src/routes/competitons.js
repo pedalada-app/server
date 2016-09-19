@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 var utils = require('./router_utils');
@@ -10,7 +12,7 @@ var fixtRepo = RepositoryFactory.fixtureRepo();
 
 // check if pass authentication
 router.use(function (req, res, next) {
-    if (req.authenticate.error) {
+	if (req.authenticate.error) {
         console.error(req.authenticate.error);
         res.status(401);
         res.json({msg: "authentication failed", error: req.authenticate.error})
@@ -21,9 +23,12 @@ router.use(function (req, res, next) {
 });
 
 // get all league names
-router.get(function (req, res, next) {
-    compRepo.getAll()
-        .then(function (comps) {
+router.get('/', function (req, res, next) {
+
+	console.log("aaaaaa");
+
+	compRepo.getAll()
+        .subscribe(function (comps) {
             let returnComps = [];
             for (let comp of comps) {
                 returnComps.push({
@@ -35,19 +40,17 @@ router.get(function (req, res, next) {
             }
             res.status(200);
             res.json(returnComps);
-        })
-        .catch(utils.errorHandler(res))
+        }, utils.errorHandler(res))
 });
 
 // get all current matchday fixtures of given competitions
 router.get('/fixtures/latest', function (req, res, next) {
-
-    compRepo.getAll()
+	compRepo.getAll()
         .flatMap(function (comps) {
-            return Rx.Observable.from(comps)
+			return Rx.Observable.from(comps)
         })
         .flatMap(function (comp) {
-            return fixtRepo.getByMatchDay(comp._id, comp.currentMatchday)
+			return fixtRepo.getByMatchDay(comp._id, comp.currentMatchday)
                 .map(function (fixtures) {
                     return {
                         competitionId: comp._id,
@@ -60,7 +63,7 @@ router.get('/fixtures/latest', function (req, res, next) {
         .subscribe(function (arr) {
             res.status(200);
             res.json(arr);
-        })
-
-
+        }, utils.errorHandler(res))
 });
+
+module.exports = router;

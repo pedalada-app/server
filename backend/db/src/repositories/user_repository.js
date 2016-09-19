@@ -29,7 +29,7 @@ class UserRepository {
 		return this.absRep.insert(obj);
 	}
 
-	addFrom(userId, formId) {
+	addForm(userId, formId) {
 		return this.absRep.update({_id : userId}, {$push : {forms  : formId}})
 	}
 

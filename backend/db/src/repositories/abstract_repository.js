@@ -1,3 +1,5 @@
+'use strict';
+
 var Rx = require('rx');
 
 class AbstractRepository {

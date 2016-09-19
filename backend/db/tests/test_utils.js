@@ -7,23 +7,23 @@ module.exports.exampleUser = {
 
 module.exports.exampleForm = {
 
-    bets : [{
-        fixture : "507f1f77bcf86cd799439011",
-        odd : 5,
-        bet : 'x'
-    }, {
-        fixture : "507f1f77bcf86cd799439012",
-        odd : 10,
-        bet : '2'
-    }, {
-        fixture : "507f1f77bcf86cd799439013",
-        odd : 15,
-        bet : '1'
-    }],
-    pedaladas : 100,
-    user : "507f1f77bcf86cd799439014",
-    name: "good form",
-    expectedWinning: 100*5*10*15
+	bets : [{
+		fixture : "57dd12ea873fdc1204c316ad",
+		odd : 5,
+		bet : 'x'
+	}, {
+		fixture : "57dd12ea873fdc1204c316ae",
+		odd : 10,
+		bet : '2'
+	}, {
+		fixture : "57dd12ea873fdc1204c316af",
+		odd : 15,
+		bet : '1'
+	}],
+	pedaladas : 100,
+	user : "57dfbdd14c38de1ab535c308",
+	name: "good form",
+	expectedWinning: 100*5*10*15
 
 };
 

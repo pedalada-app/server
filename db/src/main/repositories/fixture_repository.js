@@ -1,3 +1,5 @@
+'use strict';
+
 var modelFactory = require('../models/factory');
 var CompetitionRepository = require('./competition_repository');
 var TeamRepository = require('./team_repository');

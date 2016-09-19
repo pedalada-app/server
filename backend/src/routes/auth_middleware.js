@@ -16,5 +16,11 @@ router.use(function (req, res, next) {
 			};
 			next();
 		})
+	} else {
+		// res.status(500);
+		// res.json({msg : "there is no token in the system"});
+		next(); //for debug
 	}
 });
+
+module.exports = router;

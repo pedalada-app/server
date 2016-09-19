@@ -1,11 +1,14 @@
+'use strict';
+
 var chai = require('chai');
 var expect = chai.expect;
 
-var db = require('../../index');
-var modelFactory = require('../models/factory');
-var repoFactory = require('../repositories/factory');
+var db = require('../index');
+var modelFactory = require('../src/models/factory');
+var repoFactory = require('../src/repositories/factory');
 
-var db2 = require('../../../../db/src/main/index');
+var dataDb = require('../../../db/src/main/index');
+
 
 var Rx = require('rx');
 
@@ -16,13 +19,13 @@ var formModel;
 
 describe('form repository test', function () {
 
-    before(function (done) {
+    before(function (done) {;
 
         db.init('mongodb://localhost/pdb-users-test', {
             drop: true
         });
 
-        db2.init("mongodb://localhost/pdb-data-test");
+        dataDb.init("mongodb://localhost/pdb-data-test");
 
         formRepo = repoFactory.formRepo();
 
@@ -42,6 +45,7 @@ describe('form repository test', function () {
     });
 
     it('insert', function (done) {
+
         formRepo.insert(utils.exampleForm)
             .flatMap(function (form) {
                 return Rx.Observable.fromPromise(formModel.findOne({_id: form._id}));

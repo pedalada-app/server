@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.errorHandler = function (res) {
     return function(err) {
         console.error(err);

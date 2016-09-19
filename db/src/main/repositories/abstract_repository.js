@@ -1,3 +1,5 @@
+'use strict';
+
 var Rx = require('rx');
 
 class AbstractRepository {
@@ -62,7 +64,7 @@ class AbstractRepository {
     }
 
     findAll(query, projection, options) {
-        return this.model.find(query, projection, options);
+		return Rx.Observable.fromPromise(this.model.find(query, projection, options));
     }
 
     aggregate(query, group, sort) {

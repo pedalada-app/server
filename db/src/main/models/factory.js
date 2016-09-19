@@ -1,3 +1,5 @@
+'use strict';
+
 var competitionSchema = require('../schema/competition');
 var fixtureSchema = require('../schema/fixture');
 var standingsSchema = require('../schema/standings');
