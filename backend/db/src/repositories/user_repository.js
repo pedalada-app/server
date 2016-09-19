@@ -29,8 +29,12 @@ class UserRepository {
 		return this.absRep.insert(obj);
 	}
 
-	addForm(userId, formId) {
-		return this.absRep.update({_id : userId}, {$push : {forms  : formId}})
+	addForm(userId, formId, pedaladas) {
+		return this.absRep.update({_id : userId}, [{$push : {forms  : formId}}, {$dec : {pedaladas : pedaladas}}]);
+	}
+
+	updatePedaladas(userId, pedaladas) {
+		return this.absRep.update({_id : userId}, {$inc : {padaladas : pedaladas}})
 	}
 
 	getByMail(email) {

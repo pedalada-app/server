@@ -19,6 +19,7 @@ var authMiddleware = require('./src/routes/auth_middleware');
 var users = require('./src/routes/users');
 var form = require('./src/routes/form');
 var competitions = require('./src/routes/competitons');
+var update = require('./src/routes/update');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/', authMiddleware);
 app.use('/users', users);
 app.use('/form', form);
 app.use('/competitions', competitions);
+app.use('/update', update);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -2,7 +2,7 @@
 
 var formSchema = require('../schema/form');
 var usersSchema = require('../schema/user');
-
+var fixtureToFormsSchema = require('../schema/fixture_to_forms');
 
 class Factory {
 
@@ -13,6 +13,7 @@ class Factory {
     init(connection) {
         this._formModel = connection.model('Form', formSchema);
         this._userModel = connection.model('User', usersSchema);
+        this._fixtureToFormsModel = connection.model('Fixture_to_forms', fixtureToFormsSchema);
     }
 
     formModel() {
@@ -22,6 +23,10 @@ class Factory {
     userModel() {
         return this._userModel;
     }
+
+	fixtureToFormsModel() {
+		return this._fixtureToFormsModel;
+	}
 
 }
 

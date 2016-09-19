@@ -22,6 +22,11 @@ var formSchema = new Schema({
 		}
 	}],
 
+	gamesInProgress: {
+		type: Number,
+		required: true
+	},
+
 	pedaladas: {
 		type: Number,
 		required: true

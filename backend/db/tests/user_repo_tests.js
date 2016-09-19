@@ -33,15 +33,15 @@ describe('user repository test', function () {
 		done();
 	});
 
-	// afterEach(function (done) {
-	// 	db.drop();
-	// 	done();
-	// });
-	//
-	// after(function (done) {
-	// 	db.close();
-	// 	done();
-	// });
+	afterEach(function (done) {
+		db.drop();
+		done();
+	});
+
+	after(function (done) {
+		db.close();
+		done();
+	});
 
 	it('insert', function (done) {
 		userRepo.insert(utils.exampleUser)

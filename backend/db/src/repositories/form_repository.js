@@ -22,6 +22,7 @@ class FormRepository {
     }
 
     insert(obj) {
+    	obj.gamesInProgress = obj.bets.length;
         return this.absRep.insert(obj);
     }
 
@@ -29,10 +30,14 @@ class FormRepository {
         return this.absRep.update({_id: formId}, repositoryUtils.setFieldValue({status: status}));
     }
 
-    getById(id) {
-        return this.absRep.findOne({_id: id}).populate({path: 'bets.fixture', model: dataModelFactory.fixtureModel()});
+    getById(id, skipPop) {
 
-    }
+		var findOne = this.absRep.findOne({_id: id});
+		if(!skipPop) {
+			findOne = findOne.populate({path: 'bets.fixture', model: dataModelFactory.fixtureModel()});
+		}
+		return findOne;
+	}
 
 }
 

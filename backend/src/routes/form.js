@@ -29,7 +29,8 @@ var generateReturnForm = function (form) {
 			bet: bet.bet,
 			gameStatus: fixture.status,
 			result: fixture.results,
-			date: fixture.date
+			date: fixture.date,
+			status: fixture.status
 		});
 	}
 	returnForm.name = form.name;
@@ -96,7 +97,13 @@ router.post('/', function (req, res, next) {
 	factory.formRepo().insert(newForm)
 		.flatMap(function (form) {
 			id = form._id;
-			return factory.userRepo().addForm(userId, form._id)
+			return factory.userRepo().addForm(userId, form._id, form.pedaladas)
+		})
+		.doOnNext(function () {
+			for (let i = 0; i < newForm.bets.length; ++i) {
+				var fixtureId = newForm.bets[i].fixture;
+				factory.fixtureToFormsRepo().mapForm(fixtureId, id, i);
+			}
 		})
 		.subscribe(function (status) {
 			if (status.ok === 1) {

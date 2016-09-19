@@ -39,10 +39,10 @@ class AbstractRepository {
         return this.model.update(conditions, doc, options);
     }
 
-    update(conditions, doc) {
-        var options = {
-            overwrite : false
-        };
+    update(conditions, doc, options) {
+        options = options || {};
+		options.overwrite = options.overwrite || false;
+
         return this.updateDocs(conditions, doc, options);
     }
 
