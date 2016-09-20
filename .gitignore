@@ -1,6 +1,7 @@
 backend/node_modules/
 db/node_modules/
 live/node_modules/
+live/src/main/config.js
 import/node_modules/
 node_modules
 backend/config/auth.js
