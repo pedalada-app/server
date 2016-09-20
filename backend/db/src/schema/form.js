@@ -57,7 +57,7 @@ var formSchema = new Schema({
 	},
 
 	expectedWinning: {
-		type: String,
+		type: Number,
 		required: true
 	}
 

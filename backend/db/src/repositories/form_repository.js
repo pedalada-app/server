@@ -10,30 +10,34 @@ var Rx = require('rx');
 var dataModelFactory = require('../../../../db/src/main/models/factory');
 
 class FormConverter {
-    from(obj) {
-        return Rx.Observable.just(obj);
-    }
+	from(obj) {
+		return Rx.Observable.just(obj);
+	}
 }
 
 class FormRepository {
 
-    constructor() {
-        this.absRep = new AbstractRepository(factory.formModel(), new FormConverter());
-    }
+	constructor() {
+		this.absRep = new AbstractRepository(factory.formModel(), new FormConverter());
+	}
 
-    insert(obj) {
-    	obj.gamesInProgress = obj.bets.length;
-        return this.absRep.insert(obj);
-    }
+	insert(obj) {
+		obj.gamesInProgress = obj.bets.length;
+		return this.absRep.insert(obj);
+	}
 
-    updateStatus(formId, status) {
-        return this.absRep.update({_id: formId}, repositoryUtils.setFieldValue({status: status}));
-    }
+	updateStatus(formId, status) {
+		return this.absRep.update({_id: formId}, repositoryUtils.setFieldValue({status: status}));
+	}
 
-    getById(id, skipPop) {
+	gameFinished(formId) {
+		return this.absRep.update({_id: formId}, {$dec: {gamesInProgress: 1}});
+	}
+
+	getById(id, skipPop) {
 
 		var findOne = this.absRep.findOne({_id: id});
-		if(!skipPop) {
+		if (!skipPop) {
 			findOne = findOne.populate({path: 'bets.fixture', model: dataModelFactory.fixtureModel()});
 		}
 		return findOne;
