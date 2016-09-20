@@ -6,7 +6,6 @@ var router = express.Router();
 var Rx = require('rx');
 
 var userDbFactory = require('../../db/src/repositories/factory');
-var dataDbFactory = require('../../../db/src/main/repositories/factory');
 
 var checkBet = function (result, bet) {
 	if ((result.goalsHomeTeam > result.goalsAwayTeam) && bet === '1') {
@@ -26,7 +25,7 @@ router.post('/fixture/finish', function (req, res, next) {
 
 	Rx.Observable.from(finishedFixtures)
 		.flatMap(function (fixture) {
-			return dataDbFactory.fixtureToFormsRepo().getByFixtureId(fixture._id)
+			return userDbFactory.fixtureToFormsRepo().getByFixtureId(fixture._id)
 				.map(function (map) {
 					return {
 						map: map,
@@ -44,7 +43,7 @@ router.post('/fixture/finish', function (req, res, next) {
 				});
 		})
 		.flatMap(function (map) {
-			return Rx.Observable.fromPromise(dataDbFactory.formRepo().getById(map.form.formId, true))
+			return Rx.Observable.fromPromise(userDbFactory.formRepo().getById(map.form.formId, true))
 				.map(function (form) {
 					return {
 						form : form,
@@ -65,7 +64,7 @@ router.post('/fixture/finish', function (req, res, next) {
 			// calc new form status according fixture and results
 			if(checkBet(fixture.status, form.bets[index].bet)) {
 				userDbFactory.formRepo().gameFinished(form._id)
-					.then(function (status) {
+					.then(function () {
 						if (form.gamesInProgress === 1) { // the form is a winner.
 							return userDbFactory.userRepo().updatePedaladas(form.user, form.expectedWinning);
 						}
@@ -84,6 +83,5 @@ router.post('/fixture/finish', function (req, res, next) {
 			}
 		});
 });
-
 
 module.exports = router;
