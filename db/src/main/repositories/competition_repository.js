@@ -71,6 +71,10 @@ class CompetitionRepository {
         return this.absRep.findAll({_id : {$in : ids}})
     }
 
+	getByApiIds(apiIds) {
+		return this.absRep.findAll({api_detail: {id : {$in : apiIds}}});
+	}
+
     getAll() {
         return this.absRep.findAll({});
     }

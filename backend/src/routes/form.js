@@ -13,24 +13,26 @@ var db = require('../../db/index');
 
 var generateReturnForm = function (form) {
 	let returnForm = {};
-	returnForm.fixtures = [];
+	returnForm.bets = [];
 	for (let bet of form.bets) {
 		let fixture = bet.fixture;
-		returnForm.fixtures.push({
-			homeTeam: {
-				name: fixture.homeTeam.name,
-				id: fixture.homeTeam.id
-			},
-			awayTeam: {
-				name: fixture.awayTeam.name,
-				id: fixture.awayTeam.id
-			},
-			odd: bet.odd,
+		returnForm.bets.push({
 			bet: bet.bet,
-			gameStatus: fixture.status,
-			result: fixture.results,
-			date: fixture.date,
-			status: fixture.status
+			fixture: {
+				homeTeam: {
+					name: fixture.homeTeam.name,
+					id: fixture.homeTeam.id
+				},
+				awayTeam: {
+					name: fixture.awayTeam.name,
+					id: fixture.awayTeam.id
+				},
+				gameStatus: fixture.status,
+				result: fixture.results,
+				date: fixture.date,
+				status: fixture.status,
+				odds: fixture.odds
+			},
 		});
 	}
 	returnForm.name = form.name;

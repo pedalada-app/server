@@ -1,17 +1,21 @@
 "use strict";
 
-var CompetitionUpdateHandler = require('./competition_update_handler');
-var FixtureUpdateHandler = require('./fixture_update_handler');
+var CompetitionMatchdayUpdateHandler = require('./competition_matchday_update_handler');
+var FixtureDbUpdateHandler = require('./fixture_db_update_handler');
+var FixturePublishHandler = require('./fixture_publish_handler');
 
 var resourceMap = {
-    "Competition" : new CompetitionUpdateHandler(),
-    "Fixture" : new FixtureUpdateHandler()
+    "Competition" : [new CompetitionMatchdayUpdateHandler()],
+    "Fixture" : [new FixtureDbUpdateHandler(), new FixturePublishHandler()]
 };
 
 class HandlerFactory {
 
-    getHandler(resource) {
-        return resourceMap[resource];
+    getHandler(resource, changedFixtures) {
+        let handlers = resourceMap[resource];
+		for (let handler of handlers) {
+			handler.handle(changedFixtures)
+		}
     }
 
 }

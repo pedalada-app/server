@@ -34,7 +34,7 @@ describe("form router test", function () {
 			.get('/form')
 			.field('userId', '507f1f77bcf86cd799439014')
 			.end(function (err, res) {
-				console.log(res);
+				console.log(res.body);
 				done();
 			})
 	});

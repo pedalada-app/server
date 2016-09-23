@@ -2,9 +2,12 @@
 
 var schedule = require('node-schedule');
 
-var fixtureJob = require('./jobs/fixtures');
+var fixtureJob = require('./tasks/fixtures');
+var competitionJob = require('./tasks/competitions');
 
 
-schedule.cancelJob('*/5 * * * * *', fixtureJob());
+schedule.scheduleJob('*/3 * * * *', fixtureJob());
+schedule.scheduleJob('*/31 * * * *', competitionJob());
+
 
 

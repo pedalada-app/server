@@ -85,6 +85,10 @@ class FixtureRepository {
         return repositoryUtils.getByApiId(this, apiId);
     }
 
+    getByApiIds(apiIds) {
+		return this.absRep.findAll({api_detail : {id : {$in : apiIds}}});
+	}
+
     getById(id) {
         return repositoryUtils.getById(this, id);
     }
