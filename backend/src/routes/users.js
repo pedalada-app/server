@@ -83,7 +83,7 @@ router.post('/auth/fcm', function (req, res, next) {
 		})
 });
 
-// enter
+// user just check in
 router.post('/checkin', function (req, res, next) {
 	let now = new Date();
 	let userId = req.userId;
@@ -110,7 +110,6 @@ router.post('/checkin', function (req, res, next) {
 					.then(function () {
 
 					})
-
 			})
 
 		});
