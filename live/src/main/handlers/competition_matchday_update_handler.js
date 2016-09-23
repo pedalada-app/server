@@ -29,7 +29,7 @@ class CompetitionUpdateHandler {
 				return Rx.Observable.fromPromise(factory.competitionRepo().updateMatchDay(comp._id, idToCompMap[comp.api_detail.id].currentMatchday));
 			})
 			.subscribe(function () {
-				console.log("current matchday of a competiton has changed");
+				console.log("current matchday of a competition has changed");
 			})
     }
 
