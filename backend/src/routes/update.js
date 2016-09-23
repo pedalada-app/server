@@ -11,7 +11,9 @@ router.post('/fixture/finish', function (req, res, next) {
 	let finishedFixtures = req.body.fixtures;
 	res.status(200);
 	res.send();
-	updateFormsTasks(finishedFixtures);
+	process.nextTick(function () {
+		updateFormsTasks(finishedFixtures);
+	});
 });
 
 module.exports = router;

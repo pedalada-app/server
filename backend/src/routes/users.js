@@ -11,8 +11,8 @@ var config = require('../../config/auth'); // get our config file
 var factory = require('../../db/src/repositories/factory');
 var userRepo = factory.userRepo();
 
-/* GET users listing. */
-router.get('/auth/facebook',
+/* POST users listing. */
+router.post('/auth/facebook',
 	function (req, res, next) {
 		passport.authenticate('facebook-token', function (err, user, info) {
 			if (err) {
@@ -21,7 +21,11 @@ router.get('/auth/facebook',
 				res.send();
 				return;
 			}
-			jwt.sign(user._id, config.superSecret, {}, function (err, token) {
+			factory.userRepo().updateFcmToken(user._id, req.query.fcm_token)
+				.then(function () {
+					console.log("fcm token in inserted");
+				});
+			jwt.sign(user._id.toString(), config.superSecret, {}, function (err, token) {
 				if (err) {
 					console.error(err);
 					res.send(500);
@@ -47,7 +51,7 @@ router.use(function (req, res, next) {
 		res.status(401);
 		res.json({msg: "authentication failed", error: req.authenticate.error})
 	} else {
-		res.userId = res.authenticate.decoded;
+		req.userId = req.authenticate.decoded;
 		next();
 	}
 });
@@ -69,5 +73,47 @@ router.get('/info', function (req, res) {
 		.catch(utils.errorHandler(res))
 });
 
+// get fcm token
+router.post('/auth/fcm', function (req, res, next) {
+	let token = req.body.token;
+	userRepo.updateFcmToken(req.userId, token)
+		.then(function () {
+			res.status(200);
+			res.send();
+		})
+});
+
+// enter
+router.post('/checkin', function (req, res, next) {
+	let now = new Date();
+	let userId = req.userId;
+	userRepo.getById(userId)
+		.then(function (user) {
+			let toSend = {};
+			toSend.pedaladas = user.pedaladas;
+			let last = user.lastEntrance;
+			if (now.getFullYear() > last.getFullYear() ||
+				now.getMonth() > last.getMonth() ||
+				now.getDate() > last.getDate()) {
+				toSend.change = 50;
+			} else {
+				toSend.change = 0;
+			}
+
+			res.status(200);
+			res.send(toSend);
+			process.nextTick(function () {
+				userRepo.updatePedaladas(userId, toSend.change)
+					.then(function () {
+						return userRepo.checkIn(userId)
+					})
+					.then(function () {
+
+					})
+
+			})
+
+		});
+});
 
 module.exports = router;

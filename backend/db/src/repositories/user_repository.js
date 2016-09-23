@@ -30,11 +30,19 @@ class UserRepository {
 	}
 
 	addForm(userId, formId, pedaladas) {
-		return this.absRep.update({_id : userId}, [{$push : {forms  : formId}}, {$dec : {pedaladas : pedaladas}}]);
+		return this.absRep.update({_id : userId}, {$push : {forms  : formId}, $inc : {pedaladas : -pedaladas}});
 	}
 
 	updatePedaladas(userId, pedaladas) {
 		return this.absRep.update({_id : userId}, {$inc : {padaladas : pedaladas}})
+	}
+
+	updateFcmToken(userId, token) {
+		return this.absRep.update({_id : userId}, {fcmRegistrationToken : token})
+	}
+
+	checkIn(userId) {
+		return this.absRep.update({_id : userId}, {lastEntrance: new Date()})
 	}
 
 	getByMail(email) {

@@ -10,6 +10,10 @@ var UserSchema = new Schema({
 		unique: true
 	},
 
+	fcmRegistrationToken: {
+		type: String
+	},
+
 	email: {
 		type: String,
 		required: true,
@@ -34,7 +38,12 @@ var UserSchema = new Schema({
 	forms : [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Form'
-	}]
+	}],
+
+	lastEntrance: {
+		type : Date,
+		default: new Date(1)
+	}
 
 });
 

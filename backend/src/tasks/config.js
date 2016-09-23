@@ -1,0 +1,1 @@
+module.exports.serverKey = 'AIzaSyAp3BoNjYOUmsN7ENetS6RH-RdoCozckrU';

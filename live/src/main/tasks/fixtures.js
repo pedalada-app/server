@@ -31,8 +31,8 @@ module.exports = function () {
 		Rx.Observable.fromPromise(client.getFixtures({timeFrame: 'p1'})),
 		Rx.Observable.fromPromise(client.getFixtures({timeFrame: 'n1'})),
 		function (arr) {
-			let changeYesterday = arr[0].fixtures;
-			let todayAndTomorrow = arr[1].fixtures;
+			let changeYesterday = arr[0].data.fixtures;
+			let todayAndTomorrow = arr[1].data.fixtures;
 
 			let idToFixtureMap = createIdToFixtureMap(changeYesterday.concat(todayAndTomorrow));
 			let changedFixtures = []

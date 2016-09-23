@@ -1,7 +1,13 @@
+'use strict';
+
 var schedule = require('node-schedule');
 
-var j = schedule.scheduleJob('*/5 * * * * *', function () {
-	console.log("5 seconds pass");
-});
+var config = require('../src/main/config');
+var client = require('football-api-client')(config.apiKey);
 
-console.log(j);
+schedule.scheduleJob('*/10 * * * * *', function () {
+	client.getFixtures({timeFrame: 'p1'})
+		.then(function (comp) {
+			console.log(comp);
+		})
+});

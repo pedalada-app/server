@@ -10,6 +10,6 @@ var Rx = require('rx');
 module.exports = function () {
 	Rx.Observable.fromPromise(client.getCompetitions())
 		.subscribe(function (competitions) {
-			handlerFactory().getHandler('Competition');
+			handlerFactory().getHandler('Competition', competitions.data);
 		})
 };

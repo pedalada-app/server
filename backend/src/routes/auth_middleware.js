@@ -7,10 +7,11 @@ var express = require('express');
 var router = express.Router();
 
 router.use(function (req, res, next) {
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+	var token = req.header('x-access-token');
 	if (token) {
 		jwt.verify(token, authConfig.superSecret, function (err, decoded) {
-			req.athonticate = {
+			req.authenticate = {
 				error: err,
 				decoded: decoded
 			};

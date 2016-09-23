@@ -31,7 +31,7 @@ class FormRepository {
 	}
 
 	gameFinished(formId) {
-		return this.absRep.update({_id: formId}, {$dec: {gamesInProgress: 1}});
+		return this.absRep.update({_id: formId}, {$inc: {gamesInProgress: -1}});
 	}
 
 	getById(id, skipPop) {

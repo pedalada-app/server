@@ -1,8 +1,9 @@
-'use strict'
+'use strict';
 
 var Rx = require('rx');
 
 var userDbFactory = require('../../db/src/repositories/factory');
+var pusher = require('../tasks/pusher');
 
 var checkBet = function (result, bet) {
 	if ((result.goalsHomeTeam > result.goalsAwayTeam) && bet === '1') {
@@ -66,14 +67,15 @@ module.exports = function (finishedFixtures) {
 									return userDbFactory.formRepo().updateStatus(form._id, 'winner');
 								})
 								.then(function () {
-									// send msg via GCM
+									pusher.push(form.user, "Congratulations!",
+										"You just won " + form.expectedWinnig + " pedaladas!!");
 								});
 						}
 					})
 			} else { //this form become a loser
 				userDbFactory.formRepo().updateStatus(form._id, 'loser')
 					.then(function () {
-						// sent msg via GCM
+						pusher.push(form.user, "Bad news!", "Your form just lost. Try your luck again...");
 					});
 			}
 		});

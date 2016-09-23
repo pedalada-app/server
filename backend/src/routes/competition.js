@@ -17,16 +17,13 @@ router.use(function (req, res, next) {
         res.status(401);
         res.json({msg: "authentication failed", error: req.authenticate.error})
     } else {
-        res.userId = res.authenticate.decoded;
-        next();
+		res.userId = req.authenticate.decoded;
+		next();
     }
 });
 
 // get all league names
 router.get('/', function (req, res, next) {
-
-	console.log("aaaaaa");
-
 	compRepo.getAll()
         .subscribe(function (comps) {
             let returnComps = [];

@@ -16,10 +16,9 @@ module.exports = function (passport) {
 					done(null, user);
 				} else { // no exist.
 					repositoryFactory.userRepo().insert(profile)
-						.then(function (obj) {
+						.subscribe(function (obj) {
 							done(null, obj)
-						})
-						.catch(function (err) {
+						}, function (err) {
 							console.error(err);
 							done(err);
 						})
