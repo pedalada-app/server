@@ -34,13 +34,12 @@ class FormRepository {
 		return this.absRep.update({_id: formId}, {$inc: {gamesInProgress: -1}});
 	}
 
-	getById(id, skipPop) {
+	getById(id) {
 
-		var findOne = this.absRep.findOne({_id: id});
-		if (!skipPop) {
-			findOne = findOne.populate({path: 'bets.fixture', model: dataModelFactory.fixtureModel()});
-		}
-		return findOne;
+		return this.absRep.findOne({_id: id}).populate({path: 'bets.fixture', model: dataModelFactory.fixtureModel()});
+	}
+	getByIdSlim(id) {
+		return this.absRep.findOne({_id: id});
 	}
 
 }

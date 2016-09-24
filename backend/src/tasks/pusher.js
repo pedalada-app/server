@@ -12,18 +12,20 @@ class FcmPusher {
 	}
 
 	push(userId, title, body) {
+		let self = this;
 		factory.userRepo().getById(userId)
 			.then(function (user) {
-				this.fcm.send({
+				self.fcm.send({
 					to: user.fcmRegistrationToken,
 					notification: {
 						title: title,
 						body: body
 					}
-				}, function (err) {
+				}, function (err, res) {
 					if(err) {
-						console.log(err);
+						console.error(err);
 					}
+					console.log(res);
 				})
 			})
 	}

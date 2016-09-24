@@ -5,6 +5,13 @@ var schedule = require('node-schedule');
 var fixtureJob = require('./tasks/fixtures');
 var competitionJob = require('./tasks/competitions');
 
+var config = require('./config');
 
-schedule.scheduleJob('*/3 * * * *', fixtureJob());
-schedule.scheduleJob('*/31 * * * *', competitionJob());
+class Scheduler {
+	init() {
+		schedule.scheduleJob(config.fixturesUpdateFrequency, fixtureJob);
+		// schedule.scheduleJob(config.competitionsUpdateFrequency, competitionJob);
+	}
+}
+
+module.exports = new Scheduler();

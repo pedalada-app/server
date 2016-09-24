@@ -12,8 +12,8 @@ var fixtureToFormSchema = new Schema({
 	forms : [{
 		formId : {
 			type: mongoose.Schema.Types.ObjectId,
-			ref:"From",
-			request:true
+			ref:"Form",
+			required: true
 		},
 		index: {
 			type: Number,

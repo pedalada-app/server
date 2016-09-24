@@ -12,15 +12,17 @@ class FcmPusher {
 
 	push() {
 		this.fcm.send({
-			to: "doYQbULhla0:APA91bHOTES7tt7ccOWmRsb0_axcIc_AQHoweVVdyml-NazaXYfIzi6GP_tX064CYQt1G3okTQRTCANi_nPZkKSreizXtFZZ238sV6jlY8EzGSqknZV40sQR5CrJMtDials3C84EKiJ_",
+			to: "fDREr5AT0Kw:APA91bG1Gq5c4amwh4P9SytxUKCrq3eSy8bJKYfKSRjloSF3s_oZ6UQeIrFNmjFlpPqdfJ5IQY_6LpwgSDfX69Jtw9Pw75EP0nW3IUeehhLdwVKJI-WxtMAvEaugEVzvHwdytxGPToE1",
 			notification: {
 				title: "yuval",
 				body: "danny"
 			}
-		}, function (err) {
+		}, function (err, res) {
 			if(err) {
 				console.log(err);
 			}
+
+			console.log(res);
 
 		})
 	}

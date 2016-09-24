@@ -20,7 +20,7 @@ describe('user repository test', function () {
 
 	before(function (done) {
 
-		db.init(dbConfig.userDatabaseUrl);
+		db.init(dbConfig.userDatabaseUrl_test);
 
 		// db.init('mongodb://localhost/pdb-users-test', {
 		// 	drop: true
@@ -93,6 +93,26 @@ describe('user repository test', function () {
 				expect(actual.name).to.be.equal(expected.name);
 				expect(actual.facebookId).to.be.equal(expected.facebookId);
 				expect(actual.email).to.be.equal(expected.email);
+				done();
+			}, utils.errorHandler);
+	});
+
+	it('update pedaladas', function (done) {
+		let id;
+
+		this.timeout(5000);
+
+		userRepo.insert(utils.exampleUser)
+			.flatMap(function (user) {
+				id = user._id;
+				return Rx.Observable.fromPromise(userRepo.updatePedaladas(user._id, 1000))
+			})
+			.flatMap(function (status) {
+				console.log(status);
+				return Rx.Observable.fromPromise(userRepo.getById(id))
+			})
+			.subscribe(function (user) {
+				console.log(user);
 				done();
 			}, utils.errorHandler);
 	});

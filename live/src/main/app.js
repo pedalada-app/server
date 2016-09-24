@@ -5,6 +5,13 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
+var db = require('../../../db/src/main/index');
+var config = require('./config');
+var scheduler = require('./scheduler');
+
+db.init(config.dataDatabaseUrl);
+scheduler.init();
+
 var events = require('./routes/events');
 
 var app = express();

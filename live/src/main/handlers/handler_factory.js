@@ -17,7 +17,6 @@ class HandlerFactory {
 			handler.handle(changedFixtures)
 		}
     }
-
 }
 
 module.exports = HandlerFactory;

@@ -19,6 +19,12 @@ var checkBet = function (result, bet) {
 };
 
 module.exports = function (finishedFixtures) {
+
+	if(finishedFixtures.length === 0) {
+		console.log("no updated fixtures");
+		return;
+	}
+
 	Rx.Observable.from(finishedFixtures)
 		.flatMap(function (fixture) {
 			return userDbFactory.fixtureToFormsRepo().getByFixtureId(fixture._id)
@@ -28,6 +34,9 @@ module.exports = function (finishedFixtures) {
 						fixture: fixture
 					}
 				});
+		})
+		.filter(function (obj) {
+			return obj.map; // pass only fixtures that have forms
 		})
 		.flatMap(function (obj) {
 			return Rx.Observable.from(obj.map.forms)
@@ -39,7 +48,7 @@ module.exports = function (finishedFixtures) {
 				});
 		})
 		.flatMap(function (map) {
-			return Rx.Observable.fromPromise(userDbFactory.formRepo().getById(map.form.formId, true))
+			return Rx.Observable.fromPromise(userDbFactory.formRepo().getByIdSlim(map.form.formId))
 				.map(function (form) {
 					return {
 						form: form,
@@ -48,7 +57,7 @@ module.exports = function (finishedFixtures) {
 					}
 				});
 		})
-		.flatMap(function (obj) {
+		.subscribe(function (obj) {
 			let form = obj.form;
 			let index = obj.index;
 			let fixture = obj.fixture;
@@ -61,14 +70,17 @@ module.exports = function (finishedFixtures) {
 			if (checkBet(fixture.result, form.bets[index].bet)) {
 				userDbFactory.formRepo().gameFinished(form._id)
 					.then(function () {
-						if (form.gamesInProgress === 1) { // the form is a winner.
+						if (form.gamesInProgress === 1) { // the form is a winner
 							userDbFactory.userRepo().updatePedaladas(form.user, form.expectedWinning)
-								.then(function () {
+								.then(function (status) {
 									return userDbFactory.formRepo().updateStatus(form._id, 'winner');
 								})
-								.then(function () {
+								.then(function (status) {
 									pusher.push(form.user, "Congratulations!",
-										"You just won " + form.expectedWinnig + " pedaladas!!");
+										"You just won " + form.expectedWinning + " pedaladas!!");
+								})
+								.catch(function (err) {
+									console.error(err);
 								});
 						}
 					})
@@ -78,5 +90,7 @@ module.exports = function (finishedFixtures) {
 						pusher.push(form.user, "Bad news!", "Your form just lost. Try your luck again...");
 					});
 			}
+		}, function (err) {
+			console.error(err);
 		});
 };

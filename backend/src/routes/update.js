@@ -8,7 +8,10 @@ var router = express.Router();
 var updateFormsTasks = require('../tasks/update_forms');
 
 router.post('/fixture/finish', function (req, res, next) {
-	let finishedFixtures = req.body.fixtures;
+	let finishedFixtures = req.body.fixtures || [];
+
+	console.log(finishedFixtures);
+
 	res.status(200);
 	res.send();
 	process.nextTick(function () {

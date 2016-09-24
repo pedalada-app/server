@@ -104,7 +104,10 @@ router.post('/', function (req, res, next) {
 		.doOnNext(function () {
 			for (let i = 0; i < newForm.bets.length; ++i) {
 				var fixtureId = newForm.bets[i].fixture;
-				factory.fixtureToFormsRepo().mapForm(fixtureId, id, i);
+				factory.fixtureToFormsRepo().mapForm(fixtureId, id, i)
+					.subscribe(function () {
+
+					});
 			}
 		})
 		.subscribe(function (status) {

@@ -22,7 +22,7 @@ class FixtureToFormsRepository {
 
 	mapForm(fixtureId, formId, index) {
 		return Rx.Observable.fromPromise(this.absRep.update({fixtureId: fixtureId}, {$push: {forms: {
-			formIf: formId,
+			formId: formId,
 			index: index}
 		}}, {
 			upsert: true

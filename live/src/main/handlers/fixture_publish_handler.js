@@ -6,7 +6,14 @@ var config = require('../config');
 
 class FixturePublishHandler {
 
+	constructor() {
+		factory.init();
+	}
+
 	handle(changeFixtures) {
+
+		console.log("fixture publish handler");
+
 		let fixtureToBackend = [];
 		for (let fixture of changeFixtures) {
 			if (fixture.status === 'FINISHED') {
@@ -14,14 +21,16 @@ class FixturePublishHandler {
 			}
 		}
 
-		request({
-			method: 'POST',
-			url: config.backendFixureUpdateResource,
-			body: {
-				fixtures: fixtureToBackend
-			}
-		})
-
+		if(fixtureToBackend.length !== 0) {
+			request({
+				method: 'POST',
+				url: config.backendFixureUpdateResource,
+				body: {
+					fixtures: fixtureToBackend
+				},
+				json: true
+			})
+		}
 	}
 
 }

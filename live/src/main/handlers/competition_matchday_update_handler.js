@@ -14,25 +14,33 @@ var createIdToCompetitionMap = function (competitions) {
 
 class CompetitionUpdateHandler {
 
-    handle(competitions) {
+	constructor() {
+		factory.init();
+	}
+
+	handle(competitions) {
 		let idToCompMap = createIdToCompetitionMap(competitions);
-    	let apiIds = [];
+		let apiIds = [];
 		for (let comp of competitions) {
 			apiIds.push(comp.id);
 		}
-
 		factory.competitionRepo().getByApiIds(apiIds)
 			.flatMap(function (comps) {
 				return Rx.Observable.from(comps)
 			})
-			.flatMap(function (comp) {
-				return Rx.Observable.fromPromise(factory.competitionRepo().updateMatchDay(comp._id, idToCompMap[comp.api_detail.id].currentMatchday));
-			})
-			.subscribe(function () {
-				console.log("current matchday of a competition has changed");
-			})
-    }
+			.subscribe(function (comp) {
+				let newCurrentMatchday = idToCompMap[comp.api_detail.id].currentMatchday;
+				if (comp.currentMatchday !== newCurrentMatchday) {
+					Rx.Observable.fromPromise(factory.competitionRepo().updateMatchDay(comp._id, newCurrentMatchday))
+						.subscribe(function () {
+							console.log("current matchday of " + comp.name + " has updated");
+						})
+				} else {
+					console.log("current matchday of " + comp.name + " is updated already");
+				}
 
+			})
+	}
 }
 
 module.exports = CompetitionUpdateHandler;

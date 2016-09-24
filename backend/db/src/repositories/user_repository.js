@@ -34,7 +34,7 @@ class UserRepository {
 	}
 
 	updatePedaladas(userId, pedaladas) {
-		return this.absRep.update({_id : userId}, {$inc : {padaladas : pedaladas}})
+		return this.absRep.update({_id : userId}, {$inc : {pedaladas : pedaladas}})
 	}
 
 	updateFcmToken(userId, token) {

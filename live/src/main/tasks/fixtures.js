@@ -3,7 +3,9 @@ var config = require('../config');
 var client = require('football-api-client')(config.apiKey);
 
 var factory = require('../../../../db/src/main/repositories/factory');
-var handlerFactory = require('../handlers/handler_factory');
+var HandlerFactory = require('../handlers/handler_factory');
+
+var handler = new HandlerFactory();
 
 var Rx = require('rx');
 
@@ -27,23 +29,35 @@ var fixtureChanged = function (updated, fromDb) {
 };
 
 module.exports = function () {
+	console.log("fixture job begin");
+
 	Rx.Observable.zip(
 		Rx.Observable.fromPromise(client.getFixtures({timeFrame: 'p1'})),
 		Rx.Observable.fromPromise(client.getFixtures({timeFrame: 'n1'})),
-		function (arr) {
-			let changeYesterday = arr[0].data.fixtures;
-			let todayAndTomorrow = arr[1].data.fixtures;
+		function (changeYesterday, todayAndTomorrow) {
+			changeYesterday = changeYesterday.data.fixtures;
+			todayAndTomorrow = todayAndTomorrow.data.fixtures;
 
-			let idToFixtureMap = createIdToFixtureMap(changeYesterday.concat(todayAndTomorrow));
-			let changedFixtures = []
-			factory.fixtureRepo().getByApiIds(Object.keys(idToFixtureMap))
-				.flatMap(function (dbFixtures) {
-					for (let dbFixture of dbFixtures) {
-						if (fixtureChanged(idToFixtureMap[dbFixture.api_detail.id], dbFixture)) {
-							changedFixtures.push(dbFixture);
-						}
+			return createIdToFixtureMap(changeYesterday.concat(todayAndTomorrow));
+		})
+		.flatMap(function (idToFixtureMap) {
+			return factory.fixtureRepo().getByApiIds(Object.keys(idToFixtureMap))
+				.map(function (dbFixtures) {
+					return {
+						dbFixtures: dbFixtures,
+						idToFixtureMap : idToFixtureMap
 					}
-					handlerFactory().getHandler("Fixture", changedFixtures);
 				})
 		})
-};
+		.subscribe(function (map) {
+			let changedFixtures = [];
+			for (let dbFixture of map.dbFixtures) {
+				var newFixture = map.idToFixtureMap[dbFixture.api_detail.id];
+				if (fixtureChanged(newFixture, dbFixture)) {
+					newFixture._id = dbFixture._id;
+					changedFixtures.push(newFixture);
+				}
+			}
+			handler.getHandler("Fixture", changedFixtures);
+		});
+}
