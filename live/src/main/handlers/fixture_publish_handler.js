@@ -26,7 +26,8 @@ class FixturePublishHandler {
 				method: 'POST',
 				url: config.backendFixureUpdateResource,
 				body: {
-					fixtures: fixtureToBackend
+					fixtures: fixtureToBackend,
+					token: config.backendSecret
 				},
 				json: true
 			})

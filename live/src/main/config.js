@@ -3,5 +3,7 @@ module.exports.backendFixureUpdateResource = 'http://localhost:8080/update/fixtu
 
 module.exports.dataDatabaseUrl = "mongodb://admin:robinho@ds033126.mlab.com:33126/pedaladadb";
 
+module.exports.backendSecret = process.env.backendSecret || "123456789";
+
 module.exports.competitionsUpdateFrequency = '*/10 * * * * *';
 module.exports.fixturesUpdateFrequency = '*/10 * * * * *';
