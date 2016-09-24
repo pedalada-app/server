@@ -38,6 +38,15 @@ module.exports = function (finishedFixtures) {
 		.filter(function (obj) {
 			return obj.map; // pass only fixtures that have forms
 		})
+		.filter(function (obj) {
+			return (obj.map.status === 'in_progress');
+		})
+		.doOnNext(function (obj) {
+			userDbFactory.fixtureToFormsRepo().markComplete(obj.fixture._id)
+				.subscribe(function () {
+
+				})
+		})
 		.flatMap(function (obj) {
 			return Rx.Observable.from(obj.map.forms)
 				.map(function (form) {
