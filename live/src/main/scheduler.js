@@ -10,7 +10,7 @@ var config = require('./config');
 class Scheduler {
 	init() {
 		schedule.scheduleJob(config.fixturesUpdateFrequency, fixtureJob);
-		// schedule.scheduleJob(config.competitionsUpdateFrequency, competitionJob);
+		schedule.scheduleJob(config.competitionsUpdateFrequency, competitionJob);
 	}
 }
 

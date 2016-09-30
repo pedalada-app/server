@@ -7,7 +7,7 @@ var AbstractRepository = require('./abstract_repository');
 
 var Rx = require('rx');
 
-var dataModelFactory = require('../../../fix-db/src/main/repositories/factory');
+var dataModelFactory = require('../../../fix-db/src/main/models/factory');
 
 class FormConverter {
 	from(obj) {

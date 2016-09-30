@@ -56,6 +56,22 @@ router.use(function (req, res, next) {
 	}
 });
 
+
+// get form
+router.get('/:formId', function (req, res) {
+
+
+	let formId = req.params.formId;
+
+	factory.formRepo().getById(formId)
+		.then(function (form) {
+
+			res.status(200);
+			res.json(generateReturnForm(form));
+		})
+		.catch(utils.errorHandler(res))
+});
+
 // get user's forms
 router.get('/', function (req, res, next) {
 
@@ -79,17 +95,6 @@ router.get('/', function (req, res, next) {
 		.catch(utils.errorHandler(res))
 });
 
-// get form
-router.get('/:formId', function (req, res, next) {
-	let formId = req.params.formId;
-	factory.formRepo().getById(formId)
-		.then(function (form) {
-
-			res.status(200);
-			res.json(generateReturnForm(form));
-		})
-		.catch(utils.errorHandler(res))
-});
 
 // submit new form
 router.post('/', function (req, res, next) {
