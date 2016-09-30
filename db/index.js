@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-var modelFactory = require('./models/factory');
-var repoFactory = require('./repositories/factory');
+var modelFactory = require('./src/main/models/factory');
+var repoFactory = require('./src/main/repositories/factory');
 
 var connection;
 

@@ -6,7 +6,7 @@ var utils = require('./router_utils');
 
 var Rx = require('rx');
 
-var RepositoryFactory = require('../../../db/src/main/repositories/factory');
+var RepositoryFactory = require('../../fix-db/src/main/repositories/factory');
 var compRepo = RepositoryFactory.competitionRepo();
 var fixtRepo = RepositoryFactory.fixtureRepo();
 

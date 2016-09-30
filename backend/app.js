@@ -8,7 +8,7 @@ var passport = require('passport');
 var passportConfig = require('./config/passport');
 var db = require('./db/index');
 var dbConfig = require('./config/db');
-var dataDb = require('../db/src/main/index');
+var dataDb = require('./fix-db/index');
 
 db.init(dbConfig.userDatabaseUrl_test);
 dataDb.init(dbConfig.dataDatabaseUrl);

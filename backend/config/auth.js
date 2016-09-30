@@ -1,6 +1,8 @@
 module.exports = {
 	facebookAuth: {
-		clientID: 'your-secret-clientID-here', // your App ID
-		clientSecret: 'your-client-secret-here' // your App Secret
+		clientID: process.env.FacebookClientId, // your App ID
+		clientSecret: process.env.FacebookClientSecret // your App Secret
 	}
 };
+
+module.exports.superSecret = process.env.SuperSecret || "123456789";
