@@ -81,7 +81,7 @@ router.get('/', function (req, res, next) {
 		.then(function (user) {
 			let returnForms = [];
 			for (let form of user.forms) {
-				returnForms.push({
+				returnForms.unshift({
 					id: form._id,
 					name: form.name,
 					pedaladas: form.pedaladas,
