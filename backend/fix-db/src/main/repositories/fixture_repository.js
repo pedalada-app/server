@@ -109,7 +109,7 @@ class FixtureRepository {
 			homeTeam: "$homeTeam",
 			awayTeam: "$awayTeam",
 			odds: "$odds"
-		}, {sort: 'date'});
+		}, {sort: 'date', lean: true});
 	}
 
 	idMapping(id) {

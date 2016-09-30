@@ -13,54 +13,62 @@ var fixtRepo = RepositoryFactory.fixtureRepo();
 // check if pass authentication
 router.use(function (req, res, next) {
 	if (req.authenticate.error) {
-        console.error(req.authenticate.error);
-        res.status(401);
-        res.json({msg: "authentication failed", error: req.authenticate.error})
-    } else {
+		console.error(req.authenticate.error);
+		res.status(401);
+		res.json({msg: "authentication failed", error: req.authenticate.error})
+	} else {
 		res.userId = req.authenticate.decoded;
 		next();
-    }
+	}
 });
 
 // get all league names
 router.get('/', function (req, res, next) {
 	compRepo.getAll()
-        .subscribe(function (comps) {
-            let returnComps = [];
-            for (let comp of comps) {
-                returnComps.push({
-                    compId: comp._id,
-                    name: comp.name,
-                    logo: comp.competitionLogoUrl,
-                    matchday: comp.currentMatchday
-                })
-            }
-            res.status(200);
-            res.json(returnComps);
-        }, utils.errorHandler(res))
+		.subscribe(function (comps) {
+			let returnComps = [];
+			for (let comp of comps) {
+				returnComps.push({
+					compId: comp._id,
+					name: comp.name,
+					logo: comp.competitionLogoUrl,
+					matchday: comp.currentMatchday
+				})
+			}
+			res.status(200);
+			res.json(returnComps);
+		}, utils.errorHandler(res))
 });
 
 // get all current matchday fixtures of given competitions
 router.get('/fixtures/latest', function (req, res, next) {
 	compRepo.getAll()
-        .flatMap(function (comps) {
+		.flatMap(function (comps) {
 			return Rx.Observable.from(comps)
-        })
-        .flatMap(function (comp) {
+		})
+		.flatMap(function (comp) {
 			return fixtRepo.getByMatchDay(comp._id, comp.currentMatchday)
-                .map(function (fixtures) {
-                    return {
-                        competitionId: comp._id,
-                        currentMatchday: comp.currentMatchday,
-                        fixtures: fixtures
-                    };
-                })
-        })
-        .toArray()
-        .subscribe(function (arr) {
-            res.status(200);
-            res.json(arr);
-        }, utils.errorHandler(res))
+				.flatMap(function (fixtures) {
+					return Rx.Observable.from(fixtures)
+				})
+				.map(function (fixture) {
+					fixture.date = fixture.date.getTime();
+					return fixture;
+				})
+				.toArray()
+				.map(function (fixtures) {
+					return {
+						competitionId: comp._id,
+						currentMatchday: comp.currentMatchday,
+						fixtures: fixtures
+					};
+				})
+		})
+		.toArray()
+		.subscribe(function (arr) {
+			res.status(200);
+			res.json(arr);
+		}, utils.errorHandler(res))
 });
 
 module.exports = router;
