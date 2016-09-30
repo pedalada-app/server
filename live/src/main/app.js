@@ -5,7 +5,7 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var db = require('../../../db/src/main/index');
+var db = require('../../db/index');
 var config = require('./config');
 var scheduler = require('./scheduler');
 

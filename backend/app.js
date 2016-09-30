@@ -10,7 +10,7 @@ var db = require('./db/index');
 var dbConfig = require('./config/db');
 var dataDb = require('./fix-db/index');
 
-db.init(dbConfig.userDatabaseUrl_test);
+db.init(dbConfig.userDatabaseUrl);
 dataDb.init(dbConfig.dataDatabaseUrl);
 
 passportConfig(passport);

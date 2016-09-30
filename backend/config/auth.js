@@ -6,3 +6,5 @@ module.exports = {
 };
 
 module.exports.superSecret = process.env.SuperSecret || "123456789";
+
+module.exports.liveSecret = process.env.LiveSecret || "333";

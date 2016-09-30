@@ -60,6 +60,7 @@ router.use(function (req, res, next) {
 router.get('/', function (req, res, next) {
 
 	let userId = req.userId;
+	console.log(userId);
 	factory.userRepo().getById(userId)
 		.then(function (user) {
 			let returnForms = [];

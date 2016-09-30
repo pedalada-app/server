@@ -1,1 +1,1 @@
-module.exports.serverKey = 'AIzaSyAp3BoNjYOUmsN7ENetS6RH-RdoCozckrU';
+module.exports.serverKey = process.env.FcmKey || 'AIzaSyAp3BoNjYOUmsN7ENetS6RH-RdoCozckrU';

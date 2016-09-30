@@ -1,6 +1,6 @@
 "use strict";
 
-var factory = require('../../../../db/src/main/repositories/factory');
+var factory = require('../../../db/src/main/repositories/factory');
 
 var getFixtureName = function (fixture) {
 	return fixture.homeTeam.name + " - " + fixture.awayTeam.name;

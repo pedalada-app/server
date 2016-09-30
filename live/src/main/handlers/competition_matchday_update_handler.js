@@ -1,6 +1,6 @@
 "use strict";
 
-var factory = require('../../../../db/src/main/repositories/factory');
+var factory = require('../../../db/src/main/repositories/factory');
 
 var Rx = require('rx');
 
